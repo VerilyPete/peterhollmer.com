@@ -33,12 +33,12 @@ jobs:
           -H "Authorization: Bearer ${{ secrets.CLOUDFLARE_API_TOKEN }}" \
           -H "Content-Type: application/json" \
           --data '{"purge_everything":true}')
-    
-      echo "Cloudflare API Response: $response"
+        
+        echo "Cloudflare API Response: $response"
 
-      if echo "$response" | grep -q '"success":true'; then
-        echo "✅ Cache purged successfully"
-      else
-        echo "❌ Cache purge failed"
-        exit 1
-      fi
+        if echo "$response" | grep -q '"success":true'; then
+          echo "✅ Cache purged successfully"
+        else
+          echo "❌ Cache purge failed"
+          exit 1
+        fi
