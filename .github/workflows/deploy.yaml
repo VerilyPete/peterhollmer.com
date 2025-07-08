@@ -26,3 +26,9 @@ jobs:
           cd /usr/share/nginx/html
           git pull origin main
           sudo systemctl reload nginx
+
+    - name: Purge Cloudflare Cache
+      uses: jakejarvis/cloudflare-purge-action@master
+      env:
+        CLOUDFLARE_ZONE: ${{ secrets.CLOUDFLARE_ZONE_ID }}
+        CLOUDFLARE_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
