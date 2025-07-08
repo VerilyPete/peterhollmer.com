@@ -36,7 +36,7 @@ jobs:
         
         echo "Cloudflare API Response: $response"
 
-        if echo "$response" | grep -q '"success":true'; then
+        if echo "$response" | grep -q '"success": true'; then
           echo "✅ Cache purged successfully"
         else
           echo "❌ Cache purge failed"
