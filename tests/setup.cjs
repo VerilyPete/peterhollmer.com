@@ -1,24 +1,7 @@
 // Jest setup file for website tests
-const { configureAxe } = require('jest-axe');
+const axeCore = require('axe-core');
 
-// Configure axe for accessibility testing
-const axe = configureAxe({
-  rules: {
-    'color-contrast': { enabled: true },
-    'document-title': { enabled: true },
-    'html-has-lang': { enabled: true },
-    'image-alt': { enabled: true },
-    'label': { enabled: true },
-    'link-name': { enabled: true },
-    'list': { enabled: true },
-    'listitem': { enabled: true },
-    'page-has-heading-one': { enabled: true },
-    'region': { enabled: true }
-  }
-});
-
-// Make axe available globally
-global.axe = axe;
+global.axe = axeCore;
 
 // Mock fetch for form submission tests
 global.fetch = jest.fn();

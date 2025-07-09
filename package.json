@@ -15,18 +15,18 @@
     "install-browsers": "playwright install"
   },
   "devDependencies": {
-    "@playwright/test": "^1.40.0",
     "@axe-core/playwright": "^4.8.0",
-    "jest": "^29.7.0",
-    "jest-environment-jsdom": "^29.7.0",
-    "jest-axe": "^8.0.0",
+    "@playwright/test": "^1.40.0",
+    "axe-core": "^4.10.3",
     "html-validate": "^8.8.0",
-    "stylelint": "^15.11.0",
-    "stylelint-config-standard": "^34.0.0",
-    "stylelint-config-html": "^1.1.0",
-    "axe-core": "^4.8.0",
+    "jest": "^29.7.0",
+    "jest-axe": "^8.0.0",
+    "jest-environment-jsdom": "^29.7.0",
+    "jsdom": "^23.0.0",
     "lighthouse": "^11.4.0",
-    "jsdom": "^23.0.0"
+    "stylelint": "^15.11.0",
+    "stylelint-config-html": "^1.1.0",
+    "stylelint-config-standard": "^34.0.0"
   },
   "jest": {
     "globals": {
@@ -35,7 +35,9 @@
       }
     },
     "testEnvironment": "jsdom",
-    "setupFilesAfterEnv": ["<rootDir>/tests/setup.cjs"],
+    "setupFilesAfterEnv": [
+      "<rootDir>/tests/setup.cjs"
+    ],
     "testMatch": [
       "<rootDir>/tests/**/*.test.js",
       "<rootDir>/tests/**/*.test.cjs"
@@ -55,9 +57,11 @@
       "selector-pseudo-class-no-unknown": [
         true,
         {
-          "ignorePseudoClasses": ["global"]
+          "ignorePseudoClasses": [
+            "global"
+          ]
         }
       ]
     }
   }
-} 
+}
