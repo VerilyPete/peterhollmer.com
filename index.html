@@ -4,12 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Peter Hollmer - Engineering Leader</title>
-    <link rel="icon" type="image/x-icon" href="/favicon/favicon.ico">
-    <link rel="icon" type="image/png" href="/favicon/favicon-96x96.png" sizes="96x96">
-    <link rel="icon" type="image/svg+xml" href="/favicon/favicon.svg">
-    <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/x-icon" href="./favicon/favicon.ico">
+    <link rel="icon" type="image/png" href="./favicon/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/svg+xml" href="./favicon/favicon.svg">
+    <link rel="apple-touch-icon" sizes="180x180" href="./favicon/apple-touch-icon.png">
     <meta name="apple-mobile-web-app-title" content="PeterHollmer">
-    <link rel="manifest" href="/favicon/site.webmanifest">
+    <link rel="manifest" href="./favicon/site.webmanifest">
             <style>
             :root {
                 --color-white: #fff;
@@ -36,7 +36,7 @@
                 left: 8px;
                 top: 8px;
                 background: var(--color-white);
-                color: #000;
+                color: var(--color-black);
                 padding: 8px 16px;
                 text-decoration: none;
                 border-radius: 4px;
@@ -353,8 +353,7 @@
             opacity: 0.9;
         }
 
-        .form-group input,
-        .form-group textarea {
+        .form-input {
             width: 100%;
             padding: 0.75rem;
             border: 1px solid rgb(255 255 255 / 30%);
@@ -365,16 +364,14 @@
             transition: all 0.3s ease;
         }
 
-        .form-group input:focus,
-        .form-group textarea:focus {
+        .form-input:focus {
             outline: none;
             border-color: rgb(255 255 255 / 50%);
             background: rgb(255 255 255 / 15%);
             box-shadow: 0 0 0 3px rgb(255 255 255 / 10%);
         }
 
-        .form-group input::placeholder,
-        .form-group textarea::placeholder {
+        .form-input::placeholder {
             color: rgb(255 255 255 / 60%);
         }
 
@@ -524,17 +521,17 @@
             <form id="contact-form" class="contact-form" action="https://formspree.io/f/xanjgnvb" method="POST">
                 <div class="form-group">
                     <label for="name">Name</label>
-                    <input type="text" id="name" name="name" required aria-required="true" placeholder="Your name">
+                    <input type="text" id="name" name="name" required aria-required="true" placeholder="Your name" class="form-input">
                 </div>
 
                 <div class="form-group">
                     <label for="email">Email</label>
-                    <input type="email" id="email" name="email" required aria-required="true" placeholder="your@email.com">
+                    <input type="email" id="email" name="email" required aria-required="true" placeholder="your@email.com" class="form-input">
                 </div>
 
                 <div class="form-group">
                     <label for="message">Message</label>
-                    <textarea id="message" name="message" required aria-required="true" placeholder="What's on your mind?"></textarea>
+                    <textarea id="message" name="message" required aria-required="true" placeholder="What's on your mind?" class="form-input"></textarea>
                 </div>
 
                 <button type="submit" class="submit-btn">Send Message</button>
@@ -549,17 +546,33 @@
     </footer>
 
     <script>
+        let modalCloseTimeout = null;
+        let modalEscapeHandler = null;
+        let modalClickHandler = null;
+
         function openContactModal() {
             const modal = document.getElementById('contactModal');
             modal.classList.add('active');
             modal.setAttribute('aria-hidden', 'false');
             document.body.style.overflow = 'hidden';
-            
             // Focus the close button for accessibility
             const closeBtn = modal.querySelector('.close-btn');
             if (closeBtn) {
                 closeBtn.focus();
             }
+            // Add event listeners
+            modalEscapeHandler = function(e) {
+                if (e.key === 'Escape') {
+                    closeContactModal();
+                }
+            };
+            modalClickHandler = function(e) {
+                if (e.target === modal) {
+                    closeContactModal();
+                }
+            };
+            document.addEventListener('keydown', modalEscapeHandler);
+            modal.addEventListener('click', modalClickHandler);
         }
 
         function closeContactModal() {
@@ -567,24 +580,24 @@
             modal.classList.remove('active');
             modal.setAttribute('aria-hidden', 'true');
             document.body.style.overflow = '';
+            // Remove event listeners
+            if (modalEscapeHandler) {
+                document.removeEventListener('keydown', modalEscapeHandler);
+                modalEscapeHandler = null;
+            }
+            if (modalClickHandler) {
+                modal.removeEventListener('click', modalClickHandler);
+                modalClickHandler = null;
+            }
+            // Clear modal close timeout if still pending
+            if (modalCloseTimeout) {
+                clearTimeout(modalCloseTimeout);
+                modalCloseTimeout = null;
+            }
         }
 
-        // Close modal when clicking outside of it
-        document.getElementById('contactModal').addEventListener('click', function(e) {
-            if (e.target === this) {
-                closeContactModal();
-            }
-        });
-
-        // Close modal with Escape key
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') {
-                closeContactModal();
-            }
-        });
-
         // Handle form submission
-        document.getElementById('contact-form').addEventListener('submit', function(e) {
+        document.getElementById('contact-form').addEventListener('submit', async function(e) {
             e.preventDefault();
 
             const submitBtn = document.querySelector('.submit-btn');
@@ -596,14 +609,14 @@
             submitBtn.textContent = 'Sending...';
             messageDiv.style.display = 'none';
 
-            // Submit to Formspree
-            fetch(form.action, {
-                method: form.method,
-                body: new FormData(form),
-                headers: {
-                    'Accept': 'application/json'
-                }
-            }).then(response => {
+            try {
+                const response = await fetch(form.action, {
+                    method: form.method,
+                    body: new FormData(form),
+                    headers: {
+                        'Accept': 'application/json'
+                    }
+                });
                 if (response.ok) {
                     messageDiv.className = 'form-message success';
                     messageDiv.textContent = 'Message sent successfully! I\'ll get back to you soon.';
@@ -611,22 +624,22 @@
                     form.reset();
 
                     // Close modal after 2 seconds
-                    setTimeout(() => {
+                    modalCloseTimeout = setTimeout(() => {
                         closeContactModal();
                         messageDiv.style.display = 'none';
+                        modalCloseTimeout = null;
                     }, 2000);
                 } else {
-                    // Handle non-ok response without throwing error
                     return Promise.reject('Network response was not ok');
                 }
-            }).catch(error => {
+            } catch (error) {
                 messageDiv.className = 'form-message error';
                 messageDiv.textContent = 'Oops! There was a problem sending your message. Please try again.';
                 messageDiv.style.display = 'block';
-            }).finally(() => {
+            } finally {
                 submitBtn.disabled = false;
                 submitBtn.textContent = 'Send Message';
-            });
+            }
         });
     </script>
 </body>

@@ -55,8 +55,15 @@ describe('CSS Validation', () => {
       
       test('has no invalid CSS properties', () => {
         // Check for common CSS mistakes
-        expect(cssContent).not.toMatch(/color:\s*#[0-9a-fA-F]{3,6}\s*;/i);
-        expect(cssContent).not.toMatch(/background[^:]*:\s*#[0-9a-fA-F]{3,6}\s*;/i);
+        // Only check for hex colors in actual property values, not in custom properties
+        const lines = cssContent.split('\n');
+        lines.forEach(line => {
+          const isVar = line.trim().startsWith('--');
+          if (!isVar) {
+            expect(line).not.toMatch(/color:\s*#[0-9a-fA-F]{3,6}\s*;/i);
+            expect(line).not.toMatch(/background[^:]*:\s*#[0-9a-fA-F]{3,6}\s*;/i);
+          }
+        });
       });
       
       test('has proper vendor prefixes where needed', () => {

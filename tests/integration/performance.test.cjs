@@ -124,13 +124,19 @@ describe('Performance', () => {
       expect(totalCSS).not.toMatch(/@import/gi);
       
       // Check for efficient selectors
-      const selectors = totalCSS.match(/[^{]+(?=\{)/g) || [];
-      selectors.forEach(selector => {
-        const cleanSelector = selector.trim();
-        
-        // Avoid overly specific selectors
-        const specificity = cleanSelector.split('.').length + cleanSelector.split('#').length;
-        expect(specificity).toBeLessThan(5);
+      // Split CSS into rules by '}' and extract selector before '{'
+      const rules = totalCSS.split('}');
+      rules.forEach(rule => {
+        const selectorMatch = rule.match(/([^\{]+)\{/);
+        if (selectorMatch) {
+          const cleanSelector = selectorMatch[1].trim();
+          // Avoid overly specific selectors
+          const specificity = cleanSelector.split('.').length + cleanSelector.split('#').length;
+          if (specificity >= 5) {
+            throw new Error(`High specificity selector: "${cleanSelector}" (specificity: ${specificity})`);
+          }
+          expect(specificity).toBeLessThan(5);
+        }
       });
     });
     

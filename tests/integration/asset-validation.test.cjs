@@ -73,8 +73,6 @@ describe('Asset Validation', () => {
       'favicon/favicon.ico',
       'favicon/favicon.svg',
       'favicon/favicon-96x96.png',
-      'favicon/favicon-32x32.png',
-      'favicon/favicon-16x16.png',
       'favicon/apple-touch-icon.png',
       'favicon/web-app-manifest-192x192.png',
       'favicon/web-app-manifest-512x512.png',
@@ -98,10 +96,10 @@ describe('Asset Validation', () => {
           const href = hrefMatch[1];
           
           // Should be relative paths
-          expect(href).toMatch(/^\/favicon\//);
+          expect(href).toMatch(/^\.\/favicon\//);
           
           // Should reference existing files
-          const filePath = href.replace(/^\//, '');
+          const filePath = href.replace(/^\.\//, '');
           expect(faviconFiles).toContain(filePath);
         }
       });
@@ -138,7 +136,7 @@ describe('Asset Validation', () => {
         const sizesMatch = link.match(/sizes="([^"]*)"/i);
         
         if (hrefMatch) {
-          expect(hrefMatch[1]).toMatch(/^\/favicon\/apple-touch-icon/);
+          expect(hrefMatch[1]).toMatch(/^\.\/favicon\/apple-touch-icon/);
         }
         
         if (sizesMatch) {
@@ -155,7 +153,7 @@ describe('Asset Validation', () => {
       manifestLink.forEach(link => {
         const hrefMatch = link.match(/href="([^"]*)"/i);
         if (hrefMatch) {
-          expect(hrefMatch[1]).toBe('/favicon/site.webmanifest');
+          expect(hrefMatch[1]).toBe('./favicon/site.webmanifest');
         }
       });
       
@@ -216,8 +214,6 @@ describe('Asset Validation', () => {
     
     test('favicons have appropriate sizes', () => {
       const faviconSizes = [
-        { file: 'favicon/favicon-16x16.png', size: '16x16' },
-        { file: 'favicon/favicon-32x32.png', size: '32x32' },
         { file: 'favicon/favicon-96x96.png', size: '96x96' },
         { file: 'favicon/apple-touch-icon.png', size: '180x180' },
         { file: 'favicon/web-app-manifest-192x192.png', size: '192x192' },

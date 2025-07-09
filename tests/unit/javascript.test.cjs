@@ -46,9 +46,8 @@ describe('JavaScript Functionality', () => {
       expect(modal).toBeTruthy();
       expect(contactButton).toBeTruthy();
       
-      // Manually call the function since onclick doesn't work in test environment
-      document.getElementById('contactModal').classList.add('active');
-      document.body.style.overflow = 'hidden';
+      // Call the real openContactModal function
+      openContactModal();
       
       expect(modal.classList.contains('active')).toBe(true);
       expect(document.body.style.overflow).toBe('hidden');
@@ -59,12 +58,10 @@ describe('JavaScript Functionality', () => {
       const closeButton = modal.querySelector('.close-btn');
       
       // Open modal first
-      modal.classList.add('active');
-      document.body.style.overflow = 'hidden';
+      openContactModal();
       
       // Manually call the function since onclick doesn't work in test environment
-      document.getElementById('contactModal').classList.remove('active');
-      document.body.style.overflow = '';
+      closeContactModal();
       
       expect(modal.classList.contains('active')).toBe(false);
       expect(document.body.style.overflow).toBe('');
@@ -74,8 +71,7 @@ describe('JavaScript Functionality', () => {
       const modal = document.getElementById('contactModal');
       
       // Open modal first
-      modal.classList.add('active');
-      document.body.style.overflow = 'hidden';
+      openContactModal();
       
       // Simulate click on overlay
       const clickEvent = new Event('click');
@@ -89,8 +85,7 @@ describe('JavaScript Functionality', () => {
       const modal = document.getElementById('contactModal');
       
       // Open modal first
-      modal.classList.add('active');
-      document.body.style.overflow = 'hidden';
+      openContactModal();
       
       // Simulate Escape key
       const keyEvent = new KeyboardEvent('keydown', { key: 'Escape' });
@@ -105,8 +100,7 @@ describe('JavaScript Functionality', () => {
       const modalContent = modal.querySelector('.modal');
       
       // Open modal first
-      modal.classList.add('active');
-      document.body.style.overflow = 'hidden';
+      openContactModal();
       
       // Simulate click on modal content
       const clickEvent = new Event('click');
