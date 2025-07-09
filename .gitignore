@@ -56,4 +56,9 @@ build/
 # System files
 *.pid
 *.seed
-*.pid.lock 
+*.pid.lock
+
+# Playwright
+test-results/
+playwright-report/
+playwright/.cache/ 

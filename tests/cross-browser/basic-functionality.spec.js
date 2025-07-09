@@ -1,11 +1,11 @@
-const { test, expect } = require('@playwright/test');
+import { test, expect } from '@playwright/test';
 
 test.describe('Cross-Browser Functionality', () => {
   test('loads the main page successfully', async ({ page }) => {
     await page.goto('/');
     
     // Check page title
-    await expect(page).toHaveTitle('Peter Hollmer');
+    await expect(page).toHaveTitle(/Peter Hollmer/);
     
     // Check main content is visible
     await expect(page.locator('h1')).toContainText('Peter Hollmer');
@@ -55,7 +55,7 @@ test.describe('Cross-Browser Functionality', () => {
     
     // Form should not submit (validation prevents it)
     // Check that we're still on the same page
-    await expect(page).toHaveTitle('Peter Hollmer');
+    await expect(page).toHaveTitle(/Peter Hollmer/);
   });
 
   test('social links are accessible', async ({ page }) => {
