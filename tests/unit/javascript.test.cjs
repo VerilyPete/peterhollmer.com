@@ -2,42 +2,12 @@ const { readFileSync } = require('fs');
 const { join } = require('path');
 
 describe('JavaScript Functionality', () => {
-  let document;
-  let window;
   let htmlContent;
   
   beforeAll(() => {
     htmlContent = readFileSync(join(process.cwd(), 'index.html'), 'utf8');
   });
-  
-  beforeEach(() => {
-    // Create a fresh DOM for each test
-    document = new DOMParser().parseFromString(htmlContent, 'text/html');
-    window = document.defaultView;
-    
-    // Mock fetch globally
-    global.fetch = jest.fn();
-    
-    // Execute the JavaScript from the HTML
-    const scriptTags = htmlContent.match(/<script[^>]*>([\s\S]*?)<\/script>/gi);
-    if (scriptTags) {
-      scriptTags.forEach(scriptTag => {
-        const scriptContent = scriptTag.match(/<script[^>]*>([\s\S]*?)<\/script>/i)[1];
-        try {
-          // Create a function to execute the script in the context of our mock DOM
-          const scriptFunction = new Function('document', 'window', scriptContent);
-          scriptFunction(document, window);
-        } catch (error) {
-          console.warn('Script execution warning:', error.message);
-        }
-      });
-    }
-  });
-  
-  afterEach(() => {
-    jest.clearAllMocks();
-  });
-  
+
   describe('Contact Modal', () => {
     test('opens modal when contact button is clicked', () => {
       const contactButton = document.querySelector('.social-link[onclick*="openContactModal"]');

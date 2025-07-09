@@ -589,14 +589,18 @@
                 modal.removeEventListener('click', modalClickHandler);
                 modalClickHandler = null;
             }
-            // Clear modal close timeout if still pending
-            if (modalCloseTimeout) {
-                clearTimeout(modalCloseTimeout);
-                modalCloseTimeout = null;
-            }
+                    // Clear modal close timeout if still pending
+        if (modalCloseTimeout) {
+            clearTimeout(modalCloseTimeout);
+            modalCloseTimeout = null;
         }
+    }
 
-        // Handle form submission
+    // Expose functions globally for testing
+    window.openContactModal = openContactModal;
+    window.closeContactModal = closeContactModal;
+
+    // Handle form submission
         document.getElementById('contact-form').addEventListener('submit', async function(e) {
             e.preventDefault();
 

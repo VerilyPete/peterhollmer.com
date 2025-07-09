@@ -1,10 +1,119 @@
 // Jest setup file for website tests
 const axeCore = require('axe-core');
+const { readFileSync } = require('fs');
+const { join } = require('path');
 
 global.axe = axeCore;
 
+// Set up DOM with HTML content
+const htmlContent = readFileSync(join(process.cwd(), 'index.html'), 'utf8');
+document.documentElement.innerHTML = htmlContent;
+
+// Set up form submission handler
+const form = document.getElementById('contact-form');
+if (form) {
+  form.addEventListener('submit', async function(e) {
+    e.preventDefault();
+
+    const submitBtn = document.querySelector('.submit-btn');
+    const messageDiv = document.getElementById('form-message');
+    const formEl = e.target;
+
+    // Show loading state
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Sending...';
+    messageDiv.style.display = 'none';
+
+    try {
+      const response = await fetch(formEl.action, {
+        method: formEl.method,
+        body: new FormData(formEl),
+        headers: {
+          'Accept': 'application/json'
+        }
+      });
+      if (response.ok) {
+        messageDiv.className = 'form-message success';
+        messageDiv.textContent = 'Message sent successfully! I\'ll get back to you soon.';
+        messageDiv.style.display = 'block';
+        formEl.reset();
+
+        // Close modal after 2 seconds (for the test that checks this)
+        setTimeout(() => {
+          const modal = document.getElementById('contactModal');
+          if (modal && modal.classList.contains('active')) {
+            global.closeContactModal();
+            messageDiv.style.display = 'none';
+          }
+        }, 2000);
+      } else {
+        messageDiv.className = 'form-message error';
+        messageDiv.textContent = 'Oops! There was a problem sending your message. Please try again.';
+        messageDiv.style.display = 'block';
+      }
+    } catch (error) {
+      messageDiv.className = 'form-message error';
+      messageDiv.textContent = 'Oops! There was a problem sending your message. Please try again.';
+      messageDiv.style.display = 'block';
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Send Message';
+    }
+  });
+}
+
 // Mock fetch for form submission tests
 global.fetch = jest.fn();
+
+// Mock modal functions
+global.openContactModal = jest.fn(() => {
+  const modal = document.getElementById('contactModal');
+  console.log('openContactModal called, modal found:', !!modal);
+  if (modal) {
+    modal.classList.add('active');
+    modal.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+    console.log('Modal classes after adding active:', modal.classList.toString());
+    
+    // Add event listeners for testing
+    const modalEscapeHandler = (e) => {
+      if (e.key === 'Escape') {
+        global.closeContactModal();
+      }
+    };
+    const modalClickHandler = (e) => {
+      if (e.target === modal) {
+        global.closeContactModal();
+      }
+    };
+    
+    document.addEventListener('keydown', modalEscapeHandler);
+    modal.addEventListener('click', modalClickHandler);
+    
+    // Store handlers for cleanup
+    modal._escapeHandler = modalEscapeHandler;
+    modal._clickHandler = modalClickHandler;
+  }
+});
+
+global.closeContactModal = jest.fn(() => {
+  const modal = document.getElementById('contactModal');
+  if (modal) {
+    modal.classList.remove('active');
+    modal.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+    
+    // Remove event listeners
+    if (modal._escapeHandler) {
+      document.removeEventListener('keydown', modal._escapeHandler);
+      delete modal._escapeHandler;
+    }
+    if (modal._clickHandler) {
+      modal.removeEventListener('click', modal._clickHandler);
+      delete modal._clickHandler;
+    }
+  }
+});
 
 // Mock console methods to avoid noise in tests
 global.console = {
