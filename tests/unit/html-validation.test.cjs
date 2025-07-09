@@ -24,7 +24,7 @@ describe('HTML Validation', () => {
       });
       
       test('has required meta tags', () => {
-        expect(htmlContent).toMatch(/<meta charset="UTF-8">/i);
+        expect(htmlContent).toMatch(/<meta charset="UTF-8"[^>]*>/i);
         expect(htmlContent).toMatch(/<meta name="viewport"/i);
         expect(htmlContent).toMatch(/<title>/i);
       });

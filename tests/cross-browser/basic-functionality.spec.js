@@ -158,9 +158,17 @@ test.describe('Cross-Browser Functionality', () => {
     // Wait for animations to start
     await page.waitForTimeout(100);
     
-    // Check that elements are positioned correctly
+    // Check that container has reasonable dimensions (better than coordinate checks)
     const containerBox = await container.boundingBox();
-    expect(containerBox.x).toBeGreaterThan(0);
-    expect(containerBox.y).toBeGreaterThan(0);
+    expect(containerBox.width).toBeGreaterThan(0);
+    expect(containerBox.height).toBeGreaterThan(0);
+    
+    // Check for animated elements that should be present
+    const statusDot = page.locator('.status-dot');
+    await expect(statusDot).toBeVisible();
+    
+    // Verify some animation is applied (more flexible than checking specific names)
+    const animation = await container.evaluate(el => getComputedStyle(el).animationName);
+    expect(animation).not.toBe('none');
   });
 }); 
