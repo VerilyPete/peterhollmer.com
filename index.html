@@ -33,22 +33,26 @@
             
             .skip-link {
                 position: absolute;
-                top: -40px;
-                left: 6px;
+                left: 8px;
+                top: 8px;
                 background: var(--color-white);
                 color: #000;
-                padding: 8px;
+                padding: 8px 16px;
                 text-decoration: none;
                 border-radius: 4px;
                 z-index: 1001;
-                transition: top 0.3s;
                 font-weight: 500;
+                transform: translateY(-200%);
+                transition: transform 0.2s, opacity 0.2s;
+                opacity: 0;
+                pointer-events: none;
             }
-            
             .skip-link:focus {
-                top: 6px;
+                transform: translateY(0);
                 outline: 2px solid var(--color-white);
                 outline-offset: 2px;
+                opacity: 1;
+                pointer-events: auto;
             }
 
         body {
@@ -475,7 +479,7 @@
             <div class="profile-image">
                 <picture>
                     <source srcset="./images/HeadShotWeb.webp" type="image/webp">
-                    <img src="./images/HeadShotWeb.jpg" alt="Peter Hollmer" class="headshot">
+                    <img src="./images/HeadShotWeb.jpg" alt="Peter Hollmer" class="headshot responsive" width="120" height="120">
                 </picture>
             </div>
 
