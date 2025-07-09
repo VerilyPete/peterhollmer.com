@@ -1,5 +1,5 @@
-import { readFileSync } from 'fs';
-import { join } from 'path';
+const { readFileSync } = require('fs');
+const { join } = require('path');
 
 describe('CSS Validation', () => {
   const htmlFiles = ['index.html', '404.html', '50x.html'];

@@ -1,5 +1,5 @@
 // Jest setup file for website tests
-import { configureAxe } from 'jest-axe';
+const { configureAxe } = require('jest-axe');
 
 // Configure axe for accessibility testing
 const axe = configureAxe({

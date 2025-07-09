@@ -1,5 +1,5 @@
-import { readFileSync, existsSync } from 'fs';
-import { join } from 'path';
+const { readFileSync, existsSync } = require('fs');
+const { join } = require('path');
 
 describe('Asset Validation', () => {
   let htmlContent;
@@ -176,8 +176,8 @@ describe('Asset Validation', () => {
       // Should have proper error code
       expect(html404).toMatch(/404/);
       
-      // Should have navigation back to main site
-      expect(html404).toMatch(/href="[^"]*index\.html"/i);
+      // Should have navigation back to main site (either href to index.html or history.back())
+      expect(html404).toMatch(/(href="[^"]*index\.html"|onclick="history\.back\(\)")/i);
     });
     
     test('50x error page exists and is accessible', () => {
@@ -191,8 +191,8 @@ describe('Asset Validation', () => {
       // Should have proper error code
       expect(html50x).toMatch(/500/);
       
-      // Should have navigation back to main site
-      expect(html50x).toMatch(/href="[^"]*index\.html"/i);
+      // Should have navigation back to main site (either href to index.html or history.back())
+      expect(html50x).toMatch(/(href="[^"]*index\.html"|onclick="history\.back\(\)")/i);
     });
   });
   

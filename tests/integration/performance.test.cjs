@@ -1,5 +1,5 @@
-import { readFileSync } from 'fs';
-import { join } from 'path';
+const { readFileSync } = require('fs');
+const { join } = require('path');
 
 describe('Performance', () => {
   let htmlContent;

@@ -4,12 +4,29 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>500 - Server Error | Peter Hollmer</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+            <style>
+            :root {
+                --color-white: #fff;
+                --color-white-light: #f0f0f0;
+                --color-error-primary: #ff4757;
+                --color-error-secondary: #ff3838;
+                --color-white-20: rgb(255 255 255 / 20%);
+                --color-white-30: rgb(255 255 255 / 30%);
+                --color-white-50: rgb(255 255 255 / 50%);
+                --color-white-80: rgb(255 255 255 / 80%);
+                --color-black-30: rgb(0 0 0 / 30%);
+                --color-black-10: rgb(0 0 0 / 10%);
+                --color-error-primary-30: rgb(255 71 87 / 30%);
+                --color-error-primary-50: rgb(255 71 87 / 50%);
+                --color-error-primary-40: rgb(255 71 87 / 40%);
+                --color-error-secondary-60: rgb(255 56 56 / 60%);
+            }
+            
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
 
         body {
             font-family: "SF Pro Display", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
@@ -130,7 +147,7 @@
         .error-code {
             font-size: 8rem;
             font-weight: 900;
-            background: linear-gradient(45deg, #ff4757, #ff3838);
+            background: linear-gradient(45deg, var(--color-error-primary), var(--color-error-secondary));
             background-clip: text;
             -webkit-text-fill-color: transparent;
             margin-bottom: 1rem;
@@ -152,7 +169,7 @@
             font-size: 2rem;
             font-weight: 600;
             margin-bottom: 1rem;
-            background: linear-gradient(45deg, #fff, #f0f0f0);
+            background: linear-gradient(45deg, var(--color-white), var(--color-white-light));
             background-clip: text;
             -webkit-text-fill-color: transparent;
         }
@@ -228,7 +245,7 @@
         .retry-timer {
             font-weight: 600;
             font-size: 1.1rem;
-            color: #fff;
+            color: var(--color-white);
         }
 
         .helpful-links {
@@ -417,7 +434,7 @@
         document.head.appendChild(style);
 
         // Add subtle cursor trail effect
-        const colors = ['#ff4757', '#ff3838', '#ff6b6b'];
+        const colors = ['var(--color-error-primary)', 'var(--color-error-secondary)', 'var(--color-error-primary)'];
         let colorIndex = 0;
 
         document.addEventListener('mousemove', function(e) {

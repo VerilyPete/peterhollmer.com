@@ -2,13 +2,14 @@
   "name": "peterhollmer-website-tests",
   "version": "1.0.0",
   "description": "Test suite for PeterHollmer.com website",
+  "type": "module",
   "scripts": {
-    "test": "jest",
-    "test:watch": "jest --watch",
+    "test": "node --experimental-vm-modules node_modules/.bin/jest",
+    "test:watch": "node --experimental-vm-modules node_modules/.bin/jest --watch",
     "test:html": "html-validate *.html",
     "test:css": "stylelint '*.html'",
-    "test:accessibility": "jest --testPathPattern=accessibility",
-    "test:performance": "jest --testPathPattern=performance",
+    "test:accessibility": "node --experimental-vm-modules node_modules/.bin/jest --testPathPattern=accessibility",
+    "test:performance": "node --experimental-vm-modules node_modules/.bin/jest --testPathPattern=performance",
     "test:cross-browser": "playwright test",
     "test:all": "npm run test:html && npm run test:css && npm run test && npm run test:cross-browser",
     "install-browsers": "playwright install"
@@ -28,10 +29,16 @@
     "jsdom": "^23.0.0"
   },
   "jest": {
+    "globals": {
+      "ts-jest": {
+        "useESM": true
+      }
+    },
     "testEnvironment": "jsdom",
-    "setupFilesAfterEnv": ["<rootDir>/tests/setup.js"],
+    "setupFilesAfterEnv": ["<rootDir>/tests/setup.cjs"],
     "testMatch": [
-      "<rootDir>/tests/**/*.test.js"
+      "<rootDir>/tests/**/*.test.js",
+      "<rootDir>/tests/**/*.test.cjs"
     ],
     "collectCoverageFrom": [
       "*.html",
