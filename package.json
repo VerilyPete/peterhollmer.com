@@ -4,13 +4,13 @@
   "description": "Test suite for PeterHollmer.com website",
   "type": "module",
   "scripts": {
-    "test": "node --experimental-vm-modules node_modules/.bin/jest",
+    "test": "node --experimental-vm-modules node_modules/.bin/jest --coverage --coverageReporters=json --coverageReporters=html --coverageReporters=text",
     "test:watch": "node --experimental-vm-modules node_modules/.bin/jest --watch",
-    "test:html": "html-validate *.html",
-    "test:css": "stylelint '*.html'",
-    "test:accessibility": "node --experimental-vm-modules node_modules/.bin/jest --testPathPattern=accessibility",
-    "test:performance": "node --experimental-vm-modules node_modules/.bin/jest --testPathPattern=performance",
-    "test:cross-browser": "playwright test",
+    "test:html": "html-validate *.html --formatter json=html-validate-report.json",
+    "test:css": "stylelint '*.html' --formatter json --output-file stylelint-report.json",
+    "test:accessibility": "node --experimental-vm-modules node_modules/.bin/jest --testPathPattern=accessibility --coverage --coverageReporters=json --coverageReporters=html",
+    "test:performance": "node --experimental-vm-modules node_modules/.bin/jest --testPathPattern=performance --coverage --coverageReporters=json --coverageReporters=html",
+    "test:cross-browser": "playwright test --reporter=html",
     "test:all": "npm run test:html && npm run test:css && npm run test && npm run test:cross-browser",
     "install-browsers": "playwright install"
   },
@@ -45,6 +45,12 @@
     "collectCoverageFrom": [
       "*.html",
       "!node_modules/**"
+    ],
+    "coverageDirectory": "coverage",
+    "coverageReporters": [
+      "json",
+      "html",
+      "text"
     ]
   },
   "stylelint": {
