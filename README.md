@@ -6,7 +6,7 @@ A static website with comprehensive testing and validation.
 
 ```
 /
-├── src/           # Your actual website
+├── src/           # The website
 │   ├── index.html
 │   ├── 404.html
 │   ├── 50x.html
@@ -24,16 +24,6 @@ A static website with comprehensive testing and validation.
 
 ## Development
 
-### Running the Website Locally
-
-To serve the website locally:
-
-```bash
-cd src
-python3 -m http.server 3000
-```
-
-Then visit `http://localhost:3000`
 
 ### Running Tests
 
