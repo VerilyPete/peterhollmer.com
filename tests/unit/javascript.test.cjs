@@ -5,7 +5,7 @@ describe('JavaScript Functionality', () => {
   let htmlContent;
   
   beforeAll(() => {
-    htmlContent = readFileSync(join(process.cwd(), 'index.html'), 'utf8');
+    htmlContent = readFileSync(join(process.cwd(), '../src/index.html'), 'utf8');
   });
 
   describe('Contact Modal', () => {

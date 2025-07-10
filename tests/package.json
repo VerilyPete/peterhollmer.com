@@ -6,8 +6,8 @@
   "scripts": {
     "test": "node --experimental-vm-modules node_modules/.bin/jest --coverage --coverageReporters=json --coverageReporters=html --coverageReporters=text",
     "test:watch": "node --experimental-vm-modules node_modules/.bin/jest --watch",
-    "test:html": "html-validate *.html --formatter json=html-validate-report.json",
-    "test:css": "stylelint '*.html' --formatter json --output-file stylelint-report.json",
+    "test:html": "html-validate ../src/*.html --formatter json=../reports/html-validate-report.json",
+    "test:css": "stylelint '../src/*.html' --formatter json --output-file ../reports/stylelint-report.json",
     "test:accessibility": "node --experimental-vm-modules node_modules/.bin/jest --testPathPattern=accessibility --coverage --coverageReporters=json --coverageReporters=html",
     "test:performance": "node --experimental-vm-modules node_modules/.bin/jest --testPathPattern=performance --coverage --coverageReporters=json --coverageReporters=html",
     "test:cross-browser": "playwright test --reporter=html",
@@ -36,17 +36,17 @@
     },
     "testEnvironment": "jsdom",
     "setupFilesAfterEnv": [
-      "<rootDir>/tests/setup.cjs"
+      "<rootDir>/setup.cjs"
     ],
     "testMatch": [
-      "<rootDir>/tests/**/*.test.js",
-      "<rootDir>/tests/**/*.test.cjs"
+      "<rootDir>/**/*.test.js",
+      "<rootDir>/**/*.test.cjs"
     ],
     "collectCoverageFrom": [
-      "*.html",
+      "../src/*.html",
       "!node_modules/**"
     ],
-    "coverageDirectory": "coverage",
+    "coverageDirectory": "../reports/coverage",
     "coverageReporters": [
       "json",
       "html",

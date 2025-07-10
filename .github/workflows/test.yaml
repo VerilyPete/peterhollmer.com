@@ -10,6 +10,9 @@ jobs:
   html-validation:
     name: HTML Validation
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: tests
     steps:
     - uses: actions/checkout@v4
     
@@ -31,12 +34,15 @@ jobs:
       with:
         name: html-validation-results
         path: |
-          html-validate-report.json
-          html-validate-report.html
+          ../reports/html-validate-report.json
+          ../reports/html-validate-report.html
 
   css-validation:
     name: CSS Validation
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: tests
     steps:
     - uses: actions/checkout@v4
     
@@ -58,12 +64,15 @@ jobs:
       with:
         name: css-validation-results
         path: |
-          stylelint-report.json
-          stylelint-report.html
+          ../reports/stylelint-report.json
+          ../reports/stylelint-report.html
 
   unit-tests:
     name: Unit Tests
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: tests
     steps:
     - uses: actions/checkout@v4
     
@@ -84,11 +93,14 @@ jobs:
       if: always()
       with:
         name: unit-test-results
-        path: coverage/
+        path: ../reports/coverage/
 
   accessibility-tests:
     name: Accessibility Tests
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: tests
     steps:
     - uses: actions/checkout@v4
     
@@ -109,11 +121,14 @@ jobs:
       if: always()
       with:
         name: accessibility-test-results
-        path: coverage/
+        path: ../reports/coverage/
 
   performance-tests:
     name: Performance Tests
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: tests
     steps:
     - uses: actions/checkout@v4
     
@@ -134,11 +149,14 @@ jobs:
       if: always()
       with:
         name: performance-test-results
-        path: coverage/
+        path: ../reports/coverage/
 
   asset-validation:
     name: Asset Validation
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: tests
     steps:
     - uses: actions/checkout@v4
     
@@ -159,11 +177,14 @@ jobs:
       if: always()
       with:
         name: asset-validation-results
-        path: coverage/
+        path: ../reports/coverage/
 
   cross-browser-tests:
     name: Cross-Browser Tests
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: tests
     steps:
     - uses: actions/checkout@v4
     
@@ -188,8 +209,8 @@ jobs:
       with:
         name: cross-browser-test-results
         path: |
-          test-results/
-          playwright-report/
+          ../reports/test-results/
+          ../reports/playwright-report/
 
   lighthouse-audit:
     name: Lighthouse Audit

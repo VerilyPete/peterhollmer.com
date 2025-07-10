@@ -6,7 +6,7 @@ const { join } = require('path');
 global.axe = axeCore;
 
 // Set up DOM with HTML content
-const htmlContent = readFileSync(join(process.cwd(), 'index.html'), 'utf8');
+const htmlContent = readFileSync(join(process.cwd(), '../src/index.html'), 'utf8');
 document.documentElement.innerHTML = htmlContent;
 
 // Set up form submission handler

@@ -2,7 +2,7 @@ const { readFileSync } = require('fs');
 const { join } = require('path');
 
 describe('HTML Validation', () => {
-  const htmlFiles = ['index.html', '404.html', '50x.html'];
+  const htmlFiles = ['../src/index.html', '../src/404.html', '../src/50x.html'];
   
   htmlFiles.forEach(filename => {
     describe(`${filename}`, () => {

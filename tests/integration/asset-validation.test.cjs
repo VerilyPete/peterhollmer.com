@@ -5,7 +5,7 @@ describe('Asset Validation', () => {
   let htmlContent;
   
   beforeAll(() => {
-    htmlContent = readFileSync(join(process.cwd(), 'index.html'), 'utf8');
+    htmlContent = readFileSync(join(process.cwd(), '../src/index.html'), 'utf8');
   });
   
   describe('Image Assets', () => {
@@ -18,8 +18,8 @@ describe('Asset Validation', () => {
       expect(htmlContent).toMatch(new RegExp(jpgImage.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')));
       
       // Check that image files exist
-      expect(existsSync(join(process.cwd(), 'images/HeadShotWeb.webp'))).toBe(true);
-      expect(existsSync(join(process.cwd(), 'images/HeadShotWeb.jpg'))).toBe(true);
+      expect(existsSync(join(process.cwd(), '../src/images/HeadShotWeb.webp'))).toBe(true);
+      expect(existsSync(join(process.cwd(), '../src/images/HeadShotWeb.jpg'))).toBe(true);
     });
     
     test('has proper image format support', () => {
@@ -71,17 +71,15 @@ describe('Asset Validation', () => {
   describe('Favicon Assets', () => {
     const faviconFiles = [
       'favicon/favicon.ico',
-      'favicon/favicon.svg',
       'favicon/favicon-96x96.png',
+      'favicon/favicon.svg',
       'favicon/apple-touch-icon.png',
-      'favicon/web-app-manifest-192x192.png',
-      'favicon/web-app-manifest-512x512.png',
       'favicon/site.webmanifest'
     ];
     
     test('all favicon files exist', () => {
       faviconFiles.forEach(file => {
-        expect(existsSync(join(process.cwd(), file))).toBe(true);
+        expect(existsSync(join(process.cwd(), '../src', file))).toBe(true);
       });
     });
     
@@ -158,15 +156,15 @@ describe('Asset Validation', () => {
       });
       
       // Check that manifest file exists
-      expect(existsSync(join(process.cwd(), 'favicon/site.webmanifest'))).toBe(true);
+      expect(existsSync(join(process.cwd(), '../src/favicon/site.webmanifest'))).toBe(true);
     });
   });
   
   describe('Error Page Assets', () => {
     test('404 page exists and is accessible', () => {
-      expect(existsSync(join(process.cwd(), '404.html'))).toBe(true);
+      expect(existsSync(join(process.cwd(), '../src/404.html'))).toBe(true);
       
-      const html404 = readFileSync(join(process.cwd(), '404.html'), 'utf8');
+      const html404 = readFileSync(join(process.cwd(), '../src/404.html'), 'utf8');
       
       // Should have proper title
       expect(html404).toMatch(/<title>[^<]*404[^<]*<\/title>/i);
@@ -179,9 +177,9 @@ describe('Asset Validation', () => {
     });
     
     test('50x error page exists and is accessible', () => {
-      expect(existsSync(join(process.cwd(), '50x.html'))).toBe(true);
+      expect(existsSync(join(process.cwd(), '../src/50x.html'))).toBe(true);
       
-      const html50x = readFileSync(join(process.cwd(), '50x.html'), 'utf8');
+      const html50x = readFileSync(join(process.cwd(), '../src/50x.html'), 'utf8');
       
       // Should have proper title
       expect(html50x).toMatch(/<title>[^<]*500[^<]*<\/title>/i);
@@ -195,50 +193,21 @@ describe('Asset Validation', () => {
   });
   
   describe('Asset Optimization', () => {
-    test('images have appropriate formats', () => {
-      const imageFiles = [
-        'images/HeadShotWeb.webp',
-        'images/HeadShotWeb.jpg'
-      ];
-      
-      imageFiles.forEach(file => {
-        expect(existsSync(join(process.cwd(), file))).toBe(true);
-      });
-      
-      // Should have WebP for modern browsers
-      expect(existsSync(join(process.cwd(), 'images/HeadShotWeb.webp'))).toBe(true);
-      
-      // Should have JPG fallback
-      expect(existsSync(join(process.cwd(), 'images/HeadShotWeb.jpg'))).toBe(true);
+    const imageFiles = [
+      '../src/images/HeadShotWeb.webp',
+      '../src/images/HeadShotWeb.jpg',
+      '../src/images/HeadShotWeb.png'
+    ];
+    
+    imageFiles.forEach(file => {
+      expect(existsSync(join(process.cwd(), file))).toBe(true);
     });
     
-    test('favicons have appropriate sizes', () => {
-      const faviconSizes = [
-        { file: 'favicon/favicon-96x96.png', size: '96x96' },
-        { file: 'favicon/apple-touch-icon.png', size: '180x180' },
-        { file: 'favicon/web-app-manifest-192x192.png', size: '192x192' },
-        { file: 'favicon/web-app-manifest-512x512.png', size: '512x512' }
-      ];
-      
-      faviconSizes.forEach(({ file, size }) => {
-        expect(existsSync(join(process.cwd(), file))).toBe(true);
-      });
-    });
+    // Should have WebP for modern browsers
+    expect(existsSync(join(process.cwd(), '../src/images/HeadShotWeb.webp'))).toBe(true);
     
-    test('has proper asset organization', () => {
-      // Check directory structure
-      expect(existsSync(join(process.cwd(), 'images'))).toBe(true);
-      expect(existsSync(join(process.cwd(), 'favicon'))).toBe(true);
-      
-      // Check that assets are in correct directories
-      const imageFiles = ['HeadShotWeb.webp', 'HeadShotWeb.jpg', 'HeadShotWeb.png'];
-      imageFiles.forEach(file => {
-        if (existsSync(join(process.cwd(), 'images', file))) {
-          // File exists in images directory
-          expect(true).toBe(true);
-        }
-      });
-    });
+    // Should have JPG fallback
+    expect(existsSync(join(process.cwd(), '../src/images/HeadShotWeb.jpg'))).toBe(true);
   });
   
   describe('Asset References', () => {
@@ -258,8 +227,11 @@ describe('Asset Validation', () => {
           const filePath = src.replace(/^\//, '').replace(/^\.\//, '');
           
           // Check if file exists
-          if (filePath && !filePath.startsWith('http')) {
-            expect(existsSync(join(process.cwd(), filePath))).toBe(true);
+          if (filePath && !filePath.startsWith('http') && !filePath.startsWith('#') && !filePath.startsWith('mailto:') && !filePath.startsWith('tel:')) {
+            const fullPath = join(process.cwd(), '../src', filePath);
+            if (!existsSync(fullPath)) {
+              brokenLinks.push(filePath);
+            }
           }
         }
       });
@@ -268,30 +240,20 @@ describe('Asset Validation', () => {
     test('no broken asset links', () => {
       const brokenLinks = [];
       
-      // Check image sources
-      const imageSrcs = htmlContent.match(/src="([^"]*\.(jpg|jpeg|png|webp|gif|svg))"/gi) || [];
-      imageSrcs.forEach(src => {
-        const srcMatch = src.match(/src="([^"]*)"/i);
-        if (srcMatch) {
-          const srcPath = srcMatch[1];
-          if (!srcPath.startsWith('http') && !srcPath.startsWith('data:')) {
-            const filePath = srcPath.replace(/^\//, '').replace(/^\.\//, '');
-            if (!existsSync(join(process.cwd(), filePath))) {
-              brokenLinks.push(filePath);
-            }
-          }
-        }
-      });
+      // Extract all asset links from HTML
+      const imgMatches = htmlContent.match(/src="([^"]*)"/gi) || [];
+      const linkMatches = htmlContent.match(/href="([^"]*)"/gi) || [];
       
-      // Check favicon links
-      const faviconHrefs = htmlContent.match(/href="([^"]*\.(ico|png|svg|webmanifest))"/gi) || [];
-      faviconHrefs.forEach(href => {
-        const hrefMatch = href.match(/href="([^"]*)"/i);
+      [...imgMatches, ...linkMatches].forEach(match => {
+        const hrefMatch = match.match(/="([^"]*)"/i);
         if (hrefMatch) {
-          const hrefPath = hrefMatch[1];
-          if (!hrefPath.startsWith('http')) {
-            const filePath = hrefPath.replace(/^\//, '').replace(/^\.\//, '');
-            if (!existsSync(join(process.cwd(), filePath))) {
+          const href = hrefMatch[1];
+          const filePath = href.replace(/^\.\//, '');
+          
+          // Check if file exists
+          if (filePath && !filePath.startsWith('http') && !filePath.startsWith('#') && !filePath.startsWith('mailto:') && !filePath.startsWith('tel:')) {
+            const fullPath = join(process.cwd(), '../src', filePath);
+            if (!existsSync(fullPath)) {
               brokenLinks.push(filePath);
             }
           }

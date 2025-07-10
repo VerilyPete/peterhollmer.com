@@ -6,7 +6,7 @@ describe('Accessibility (a11y)', () => {
   let htmlContent;
   
   beforeAll(() => {
-    htmlContent = readFileSync(join(process.cwd(), 'index.html'), 'utf8');
+    htmlContent = readFileSync(join(process.cwd(), '../src/index.html'), 'utf8');
   });
   
   beforeEach(() => {
