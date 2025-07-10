@@ -6,8 +6,8 @@
   "scripts": {
     "test": "node --experimental-vm-modules node_modules/.bin/jest --coverage --coverageReporters=json --coverageReporters=html --coverageReporters=text",
     "test:watch": "node --experimental-vm-modules node_modules/.bin/jest --watch",
-    "test:html": "html-validate ../src/*.html --formatter json=../reports/html-validate-report.json",
-    "test:css": "stylelint '../src/*.html' --formatter json --output-file ../reports/stylelint-report.json",
+    "test:html": "html-validate *.html --formatter json=html-validate-report.json",
+    "test:css": "stylelint '*.html' --formatter json --output-file stylelint-report.json",
     "test:accessibility": "node --experimental-vm-modules node_modules/.bin/jest --testPathPatterns=accessibility --coverage --coverageReporters=json --coverageReporters=html",
     "test:performance": "node --experimental-vm-modules node_modules/.bin/jest --testPathPatterns=performance --coverage --coverageReporters=json --coverageReporters=html",
     "test:cross-browser": "playwright test --reporter=html",
@@ -24,9 +24,9 @@
     "jest-environment-jsdom": "^30.0.4",
     "jsdom": "^26.1.0",
     "lighthouse": "^12.7.1",
-    "stylelint": "^16.21.1",
+    "stylelint": "^15.11.0",
     "stylelint-config-html": "^1.1.0",
-    "stylelint-config-standard": "^38.0.0"
+    "stylelint-config-standard": "^34.0.0"
   },
   "jest": {
     "globals": {
@@ -36,17 +36,17 @@
     },
     "testEnvironment": "jsdom",
     "setupFilesAfterEnv": [
-      "<rootDir>/setup.cjs"
+      "<rootDir>/tests/setup.cjs"
     ],
     "testMatch": [
-      "<rootDir>/**/*.test.js",
-      "<rootDir>/**/*.test.cjs"
+      "<rootDir>/tests/**/*.test.js",
+      "<rootDir>/tests/**/*.test.cjs"
     ],
     "collectCoverageFrom": [
-      "../src/*.html",
+      "*.html",
       "!node_modules/**"
     ],
-    "coverageDirectory": "../reports/coverage",
+    "coverageDirectory": "coverage",
     "coverageReporters": [
       "json",
       "html",

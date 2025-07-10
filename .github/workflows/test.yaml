@@ -176,7 +176,7 @@ jobs:
       run: npm ci
     
     - name: Run asset validation tests
-      run: npm test -- --testPathPattern=asset-validation
+      run: npm test -- --testPathPatterns=asset-validation
     
     - name: Upload asset validation results
       uses: actions/upload-artifact@v4
@@ -246,7 +246,7 @@ jobs:
     - name: Run Lighthouse audit
       run: |
         cd tests
-        npx lighthouse http://localhost:3000 --output=json --output-path=../reports/lighthouse-report.json --chrome-flags="--headless --no-sandbox"
+        npx lighthouse http://localhost:3000 --output=json --output-path=${{ github.workspace }}/reports/lighthouse-report.json --chrome-flags="--headless --no-sandbox"
     
     - name: Upload Lighthouse results
       uses: actions/upload-artifact@v4
