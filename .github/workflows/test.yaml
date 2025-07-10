@@ -84,9 +84,7 @@ jobs:
       if: always()
       with:
         name: unit-test-results
-        path: |
-          coverage/
-          test-results/
+        path: coverage/
 
   accessibility-tests:
     name: Accessibility Tests
@@ -111,9 +109,7 @@ jobs:
       if: always()
       with:
         name: accessibility-test-results
-        path: |
-          coverage/
-          test-results/
+        path: coverage/
 
   performance-tests:
     name: Performance Tests
@@ -138,9 +134,7 @@ jobs:
       if: always()
       with:
         name: performance-test-results
-        path: |
-          coverage/
-          test-results/
+        path: coverage/
 
   asset-validation:
     name: Asset Validation
@@ -165,9 +159,7 @@ jobs:
       if: always()
       with:
         name: asset-validation-results
-        path: |
-          coverage/
-          test-results/
+        path: coverage/
 
   cross-browser-tests:
     name: Cross-Browser Tests
