@@ -237,6 +237,9 @@ jobs:
         cd tests
         npm ci
     
+    - name: Create reports directory
+      run: mkdir -p ${{ github.workspace }}/reports
+    
     - name: Start local server
       run: |
         cd src
