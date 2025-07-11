@@ -29,15 +29,12 @@ jobs:
     - name: Run HTML validation
       run: npm run test:html
     
-    - name: Generate HTML validation report
-      run: html-validate ../src/*.html --formatter html=../reports/html-validate-report.html
-    
     - name: Upload HTML validation results
       uses: actions/upload-artifact@v4
       if: always()
       with:
         name: html-validation-results
-        path: ${{ github.workspace }}/reports/html-validate-report.html
+        path: ${{ github.workspace }}/reports/html-validate-report.xml
 
   css-validation:
     name: CSS Validation
@@ -60,16 +57,6 @@ jobs:
     
     - name: Run CSS validation
       run: npm run test:css
-    
-    - name: Generate CSS validation HTML report
-      run: stylelint '../src/*.html' --formatter html --output-file ../reports/stylelint-report.html
-    
-    - name: Upload CSS validation results
-      uses: actions/upload-artifact@v4
-      if: always()
-      with:
-        name: css-validation-results
-        path: ${{ github.workspace }}/reports/stylelint-report.html
 
   unit-tests:
     name: Unit Tests

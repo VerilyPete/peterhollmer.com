@@ -6,8 +6,8 @@
   "scripts": {
     "test": "node --experimental-vm-modules node_modules/.bin/jest --coverage --coverageReporters=json --coverageReporters=html --coverageReporters=text",
     "test:watch": "node --experimental-vm-modules node_modules/.bin/jest --watch",
-    "test:html": "html-validate ../src/*.html --formatter html=../reports/html-validate-report.html",
-    "test:css": "stylelint '../src/*.html' --formatter html --output-file ../reports/stylelint-report.html",
+    "test:html": "html-validate ../src/*.html --formatter checkstyle=../reports/html-validate-report.xml",
+    "test:css": "stylelint '../src/*.html' --formatter github",
     "test:accessibility": "node --experimental-vm-modules node_modules/.bin/jest --testPathPatterns=accessibility --coverage --coverageReporters=json --coverageReporters=html",
     "test:performance": "node --experimental-vm-modules node_modules/.bin/jest --testPathPatterns=performance --coverage --coverageReporters=json --coverageReporters=html",
     "test:cross-browser": "playwright test",
