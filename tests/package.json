@@ -7,11 +7,13 @@
     "test": "node --experimental-vm-modules node_modules/.bin/jest --coverage --coverageReporters=json --coverageReporters=html --coverageReporters=text",
     "test:watch": "node --experimental-vm-modules node_modules/.bin/jest --watch",
     "test:html": "html-validate ../src/*.html --formatter text",
-    "test:css": "stylelint '../src/*.html' --formatter github",
+    "test:css": "stylelint '../src/*.html' --custom-formatter stylelint-formatter-pretty",
+    "test:css:ci": "stylelint '../src/*.html' --formatter github-actions",
     "test:accessibility": "node --experimental-vm-modules node_modules/.bin/jest --testPathPatterns=accessibility --coverage --coverageReporters=json --coverageReporters=html",
     "test:performance": "node --experimental-vm-modules node_modules/.bin/jest --testPathPatterns=performance --coverage --coverageReporters=json --coverageReporters=html",
     "test:cross-browser": "playwright test",
     "test:all": "npm run test:html && npm run test:css && npm run test && npm run test:cross-browser",
+    "test:all:ci": "npm run test:html && npm run test:css:ci && npm run test && npm run test:cross-browser",
     "install-browsers": "playwright install"
   },
   "devDependencies": {
@@ -25,8 +27,10 @@
     "jsdom": "^26.1.0",
     "lighthouse": "^12.7.1",
     "stylelint": "^16.21.1",
+    "stylelint-actions-formatters": "^16.3.1",
     "stylelint-config-html": "^1.1.0",
-    "stylelint-config-standard": "^38.0.0"
+    "stylelint-config-standard": "^38.0.0",
+    "stylelint-formatter-pretty": "^4.0.1"
   },
   "jest": {
     "globals": {
@@ -67,7 +71,8 @@
             "global"
           ]
         }
-      ]
+      ],
+      "media-feature-range-notation": "context"
     }
   }
 }

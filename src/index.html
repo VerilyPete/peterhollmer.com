@@ -84,12 +84,10 @@
           rgb(118 75 162) 100%
         );
         min-height: 100vh;
-        display: flex;
-        align-items: center;
-        justify-content: center;
         color: white;
-        overflow: hidden;
         position: relative;
+        margin: 0;
+        padding: 0;
       }
 
       .background-animation {
@@ -232,7 +230,7 @@
         border: 1px solid rgb(255 255 255 / 20%);
         box-shadow: 0 8px 32px rgb(0 0 0 / 30%);
         animation: slide-up 1s ease-out;
-        margin-top: 1rem;
+        margin: 8rem auto 2rem;
       }
 
       @keyframes slide-up {
@@ -367,6 +365,7 @@
         max-width: 800px;
         padding: 2rem;
         text-align: left;
+        margin: 8rem auto 2rem;
       }
 
       .about-container h1 {
@@ -611,6 +610,10 @@
       }
 
       @media (width <= 768px) {
+        body {
+          overflow-x: hidden;
+        }
+
         .nav {
           top: 1rem;
           left: 1rem;
@@ -631,7 +634,7 @@
 
         .container,
         .about-container {
-          margin: 1rem;
+          margin: 6rem 1rem 2rem;
           padding: 1.5rem;
         }
 
@@ -649,6 +652,16 @@
 
         .modal {
           padding: 1.5rem;
+        }
+      }
+
+      /* Tablet landscape specific fixes */
+      @media (width >= 769px) and (width <= 1024px) and (orientation: landscape) {
+        .container,
+        .about-container {
+          margin: 6rem auto 2rem;
+          max-height: 80vh;
+          overflow-y: auto;
         }
       }
     </style>
