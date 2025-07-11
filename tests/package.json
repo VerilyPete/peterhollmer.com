@@ -8,7 +8,7 @@
     "test:watch": "node --experimental-vm-modules node_modules/.bin/jest --watch",
     "test:html": "html-validate ../src/*.html --formatter text",
     "test:css": "stylelint '../src/*.html' --custom-formatter stylelint-formatter-pretty",
-    "test:css:ci": "stylelint '../src/*.html' --formatter github-actions",
+    "test:css:ci": "stylelint '../src/*.html' --custom-formatter stylelint-actions-formatters",
     "test:accessibility": "node --experimental-vm-modules node_modules/.bin/jest --testPathPatterns=accessibility --coverage --coverageReporters=json --coverageReporters=html",
     "test:performance": "node --experimental-vm-modules node_modules/.bin/jest --testPathPatterns=performance --coverage --coverageReporters=json --coverageReporters=html",
     "test:cross-browser": "playwright test",

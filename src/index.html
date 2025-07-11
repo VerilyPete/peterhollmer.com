@@ -615,11 +615,16 @@
         }
 
         .nav {
-          top: 1rem;
-          left: 1rem;
-          right: 1rem;
+          position: static;
+          margin: 0 auto 1.5rem auto;
+          left: unset;
+          top: unset;
+          right: unset;
           transform: none;
-          max-width: none;
+          max-width: 100%;
+          width: 100%;
+          display: flex;
+          justify-content: center;
         }
 
         .nav-list {
@@ -634,7 +639,7 @@
 
         .container,
         .about-container {
-          margin: 6rem 1rem 2rem;
+          margin: 1.5rem 1rem 2rem 1rem;
           padding: 1.5rem;
         }
 
