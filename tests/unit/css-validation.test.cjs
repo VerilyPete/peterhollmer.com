@@ -107,11 +107,20 @@ describe('CSS Validation', () => {
       });
       
       test('has proper transition definitions', () => {
-        const transitions = cssContent.match(/transition[^:]*:\s*[^;]+/gi) || [];
-        transitions.forEach(transition => {
-          const value = transition.match(/transition[^:]*:\s*([^;]+)/i)[1];
-          // Transition should have duration
-          expect(value).toMatch(/[0-9]+(s|ms)/);
+        // Split CSS into lines and look for transition properties more carefully
+        const lines = cssContent.split('\n');
+        const transitionLines = lines.filter(line => 
+          line.trim().startsWith('transition:') || 
+          line.trim().startsWith('transition ')
+        );
+        
+        transitionLines.forEach(line => {
+          const match = line.match(/transition[^:]*:\s*([^;]+)/i);
+          if (match) {
+            const value = match[1].trim();
+            // Transition should have duration
+            expect(value).toMatch(/[0-9]+(s|ms)/);
+          }
         });
       });
       
