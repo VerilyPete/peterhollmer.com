@@ -32,7 +32,7 @@ describe('Accessibility (a11y)', () => {
     test('has proper document title', () => {
       const title = document.querySelector('title');
       expect(title).toBeTruthy();
-      expect(title.textContent.trim()).toBe('Peter Hollmer - Engineering Leader');
+      expect(title.textContent.trim()).toBe('Peter Hollmer - Engineering Leader & People-First Technologist');
     });
     
     test('has proper language declaration', () => {
