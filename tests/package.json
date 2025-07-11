@@ -10,7 +10,7 @@
     "test:css": "stylelint '../src/*.html' --formatter json --output-file ../reports/stylelint-report.json",
     "test:accessibility": "node --experimental-vm-modules node_modules/.bin/jest --testPathPatterns=accessibility --coverage --coverageReporters=json --coverageReporters=html",
     "test:performance": "node --experimental-vm-modules node_modules/.bin/jest --testPathPatterns=performance --coverage --coverageReporters=json --coverageReporters=html",
-    "test:cross-browser": "playwright test --reporter=html",
+    "test:cross-browser": "playwright test",
     "test:all": "npm run test:html && npm run test:css && npm run test && npm run test:cross-browser",
     "install-browsers": "playwright install"
   },

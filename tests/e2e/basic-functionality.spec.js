@@ -7,10 +7,10 @@ test.describe('Cross-Browser Functionality', () => {
     // Check page title
     await expect(page).toHaveTitle(/Peter Hollmer/);
     
-    // Check main content is visible
-    await expect(page.locator('h1')).toContainText('Peter Hollmer');
-    await expect(page.locator('.subtitle')).toBeVisible();
-    await expect(page.locator('.description')).toBeVisible();
+    // Check main content is visible - be specific about the home page
+    await expect(page.locator('#home-page h1')).toContainText('Peter Hollmer');
+    await expect(page.locator('#home-page .subtitle')).toBeVisible();
+    await expect(page.locator('#home-page .description')).toBeVisible();
   });
 
   test('displays profile image correctly', async ({ page }) => {
@@ -72,10 +72,10 @@ test.describe('Cross-Browser Functionality', () => {
     await page.setViewportSize({ width: 375, height: 667 });
     await page.goto('/');
     
-    // Check content is still visible
-    await expect(page.locator('h1')).toBeVisible();
-    await expect(page.locator('.subtitle')).toBeVisible();
-    await expect(page.locator('.description')).toBeVisible();
+    // Check content is still visible - be specific about the home page
+    await expect(page.locator('#home-page h1')).toBeVisible();
+    await expect(page.locator('#home-page .subtitle')).toBeVisible();
+    await expect(page.locator('#home-page .description')).toBeVisible();
     
     // Check social links are accessible
     const socialLinks = page.locator('.social-links');
@@ -151,8 +151,8 @@ test.describe('Cross-Browser Functionality', () => {
   test('CSS animations are working', async ({ page }) => {
     await page.goto('/');
     
-    // Check for animated elements
-    const container = page.locator('.container');
+    // Check for animated elements - be specific about the home page container
+    const container = page.locator('#home-page .container');
     await expect(container).toBeVisible();
     
     // Wait for animations to start
