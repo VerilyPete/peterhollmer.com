@@ -1,0 +1,29 @@
+name: Trigger Container Build
+
+on:
+  push:
+    branches: [main]
+    paths:
+      # Only trigger on actual application changes
+      - 'src/**'
+      # Add other paths that affect the container
+
+jobs:
+  trigger-build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger container build in webserver repo
+        uses: peter-evans/repository-dispatch@v3
+        with:
+          token: ${{ secrets.WEBSERVER_DEPLOY_TOKEN }}
+          repository: VerilyPete/webserver
+          event-type: build-from-app
+          client-payload: |
+            {
+              "app_repo": "${{ github.repository }}",
+              "commit_sha": "${{ github.sha }}",
+              "commit_message": "${{ github.event.head_commit.message }}",
+              "author": "${{ github.actor }}",
+              "ref": "${{ github.ref }}",
+              "tag_suffix": "app-${{ github.sha }}"
+            }
