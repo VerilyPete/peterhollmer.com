@@ -292,7 +292,7 @@ describe('JavaScript Functionality', () => {
       
       // Check fetch was called with correct parameters
       expect(global.fetch).toHaveBeenCalledWith(
-        'https://formspree.io/f/xanjgnvb',
+        'http://localhost/submit-form',
         expect.objectContaining({
           method: expect.stringMatching(/^post$/i),
           headers: {
