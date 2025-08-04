@@ -1,904 +1,1154 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Peter Hollmer - Senior Technical Operations & Engineering Leadership</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        :root {
-            --gradient-start: rgb(102 126 234);
-            --gradient-end: rgb(118 75 162);
-            --color-white: #fff;
-            --color-white-light: #f0f0f0;
-            --color-white-10: rgb(255 255 255 / 10%);
-            --color-white-20: rgb(255 255 255 / 20%);
-            --color-white-30: rgb(255 255 255 / 30%);
-            --color-white-50: rgb(255 255 255 / 50%);
-            --color-white-60: rgb(255 255 255 / 60%);
-            --color-white-80: rgb(255 255 255 / 80%);
-            --color-black-10: rgb(0 0 0 / 10%);
-            --color-black-30: rgb(0 0 0 / 30%);
-            --color-black-70: rgb(0 0 0 / 70%);
-            --color-success: rgb(74 222 128);
-            --text-dark: #2d3748;
-            --accent-color: rgb(102 126 234);
-            --hover-transform: translateY(-3px);
-        }
-
-        body {
-            font-family: "SF Pro Display", -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-            line-height: 1.6;
-            color: white;
-            background: linear-gradient(135deg, rgb(102 126 234) 0%, rgb(118 75 162) 100%);
-            min-height: 100vh;
-            position: relative;
-            overflow-x: hidden;
-        }
-
-        /* Floating shapes animation */
-        .floating-shapes {
-            position: fixed;
-            width: 100%;
-            height: 100%;
-            top: 0;
-            left: 0;
-            pointer-events: none;
-            z-index: 1;
-        }
-
-        .shape {
-            position: absolute;
-            background: rgb(255 255 255 / 10%);
-            border-radius: 50%;
-            animation: float-shape 20s infinite linear;
-        }
-
-        .shape:nth-child(1) {
-            width: 80px;
-            height: 80px;
-            left: 10%;
-            animation-delay: 0s;
-        }
-
-        .shape:nth-child(2) {
-            width: 120px;
-            height: 120px;
-            left: 70%;
-            animation-delay: 5s;
-        }
-
-        .shape:nth-child(3) {
-            width: 60px;
-            height: 60px;
-            left: 40%;
-            animation-delay: 10s;
-        }
-
-        .shape:nth-child(4) {
-            width: 90px;
-            height: 90px;
-            left: 80%;
-            animation-delay: 15s;
-        }
-
-        @keyframes float-shape {
-            0% {
-                transform: translateY(100vh) rotate(0deg);
-                opacity: 0;
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="format-detection" content="telephone=no" />
+        <title>
+            Peter Hollmer - Senior Technical Operations & Engineering Leadership
+        </title>
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        />
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
             }
-            10% {
-                opacity: 1;
+
+            :root {
+                --gradient-start: rgb(102 126 234);
+                --gradient-end: rgb(118 75 162);
+                --color-white: #fff;
+                --color-white-light: #f0f0f0;
+                --color-white-10: rgb(255 255 255 / 10%);
+                --color-white-20: rgb(255 255 255 / 20%);
+                --color-white-30: rgb(255 255 255 / 30%);
+                --color-white-50: rgb(255 255 255 / 50%);
+                --color-white-60: rgb(255 255 255 / 60%);
+                --color-white-80: rgb(255 255 255 / 80%);
+                --color-black-10: rgb(0 0 0 / 10%);
+                --color-black-30: rgb(0 0 0 / 30%);
+                --color-black-70: rgb(0 0 0 / 70%);
+                --color-success: rgb(74 222 128);
+                --text-dark: #2d3748;
+                --accent-color: rgb(102 126 234);
+                --hover-transform: translateY(-3px);
             }
-            90% {
-                opacity: 1;
-            }
-            100% {
-                transform: translateY(-100px) rotate(360deg);
-                opacity: 0;
-            }
-        }
 
-        /* Dynamic Header */
-        .header {
-            color: white;
-            padding: 4rem 0 2rem;
-            position: relative;
-            z-index: 10;
-            text-align: center;
-        }
-
-        .header-content {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 2rem;
-            background: rgb(255 255 255 / 10%);
-            border-radius: 20px;
-            backdrop-filter: blur(20px);
-            border: 1px solid rgb(255 255 255 / 20%);
-            box-shadow: 0 8px 32px rgb(0 0 0 / 30%);
-            animation: slide-down 1s ease-out;
-        }
-
-        @keyframes slide-down {
-            from {
-                opacity: 0;
-                transform: translateY(-30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        h1 {
-            font-size: 3rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-            background: linear-gradient(45deg, var(--color-white), var(--color-white-light));
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .tagline {
-            font-size: 1.3rem;
-            opacity: 0.9;
-            font-weight: 300;
-            margin-bottom: 2rem;
-        }
-
-        .contact-links {
-            display: flex;
-            gap: 1.5rem;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-
-        .contact-link {
-            color: white;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.75rem 1.5rem;
-            border: 1px solid var(--color-white-30);
-            border-radius: 25px;
-            transition: all 0.3s ease;
-            background: var(--color-white-20);
-            font-weight: 500;
-        }
-
-        .contact-link:hover {
-            transform: var(--hover-transform);
-            background: var(--color-white-30);
-            box-shadow: 0 5px 15px var(--color-black-30);
-        }
-
-        @keyframes slideInLeft {
-            from {
-                opacity: 0;
-                transform: translateX(-50px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-
-        /* Main Content */
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 2rem;
-            position: relative;
-            z-index: 10;
-        }
-
-        /* Professional Summary */
-        .summary-section {
-            background: var(--color-white-10);
-            padding: 2rem;
-            border-radius: 20px;
-            margin: 2rem auto 3rem;
-            max-width: 1000px;
-            backdrop-filter: blur(20px);
-            border: 1px solid var(--color-white-20);
-            box-shadow: 0 8px 32px var(--color-black-30);
-            animation: slide-up 1s ease-out;
-        }
-
-        @keyframes slide-up {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .summary-section h2 {
-            color: var(--color-white);
-            margin-bottom: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .summary-text {
-            color: var(--color-white);
-            line-height: 1.8;
-            font-size: 1.1rem;
-            opacity: 0.9;
-        }
-
-        .highlight {
-            font-weight: 600;
-            color: var(--color-success);
-        }
-
-        /* Section Styles */
-        .section {
-            margin-bottom: 3rem;
-        }
-
-        .section-header {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            margin-bottom: 2rem;
-            padding-bottom: 1rem;
-            border-bottom: 2px solid var(--color-white-20);
-        }
-
-        .section-icon {
-            width: 40px;
-            height: 40px;
-            background: var(--color-white-20);
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 1.2rem;
-        }
-
-        .section h2 {
-            color: var(--color-white);
-            font-size: 2rem;
-            margin: 0;
-        }
-
-        /* Work Experience Cards */
-        .experience-card {
-            background: var(--color-white-10);
-            border-radius: 20px;
-            padding: 2rem;
-            margin-bottom: 2rem;
-            backdrop-filter: blur(20px);
-            border: 1px solid var(--color-white-20);
-            box-shadow: 0 8px 32px var(--color-black-30);
-            transition: all 0.3s ease;
-        }
-
-        .experience-card:hover {
-            transform: var(--hover-transform);
-            box-shadow: 0 15px 40px var(--color-black-30);
-        }
-
-        .company-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            flex-wrap: wrap;
-            margin-bottom: 1rem;
-        }
-
-        .company-info h3 {
-            color: var(--color-white);
-            font-size: 1.5rem;
-            margin-bottom: 0.25rem;
-        }
-
-        .company-details {
-            color: var(--color-white-80);
-            font-size: 0.95rem;
-        }
-
-        .date-range {
-            background: var(--color-white-20);
-            color: white;
-            padding: 0.25rem 1rem;
-            border-radius: 20px;
-            font-size: 0.9rem;
-            white-space: nowrap;
-            border: 1px solid var(--color-white-30);
-        }
-
-        .role {
-            font-weight: 600;
-            color: var(--color-white);
-            margin: 1rem 0 0.5rem;
-            font-size: 1.1rem;
-        }
-
-        .experience-card p {
-            color: var(--color-white);
-            opacity: 0.9;
-            margin-bottom: 1rem;
-        }
-
-        .achievements {
-            list-style: none;
-            padding: 0;
-        }
-
-        .achievements li {
-            position: relative;
-            padding-left: 2rem;
-            margin-bottom: 0.8rem;
-            color: var(--color-white);
-            line-height: 1.6;
-            opacity: 0.9;
-        }
-
-        .achievements li::before {
-            content: '▸';
-            position: absolute;
-            left: 0;
-            color: var(--color-success);
-            font-size: 1.2rem;
-            font-weight: bold;
-        }
-
-        /* Skills Grid */
-        .skills-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 1.5rem;
-        }
-
-        .skill-category {
-            background: var(--color-white-10);
-            border-radius: 20px;
-            padding: 1.5rem;
-            backdrop-filter: blur(20px);
-            border: 1px solid var(--color-white-20);
-            box-shadow: 0 8px 32px var(--color-black-30);
-            transition: all 0.3s ease;
-        }
-
-        .skill-category:hover {
-            transform: var(--hover-transform);
-            box-shadow: 0 15px 35px var(--color-black-30);
-        }
-
-        .skill-category h4 {
-            color: var(--color-white);
-            margin-bottom: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .skill-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-        }
-
-        .skill-tag {
-            background: var(--color-white-20);
-            color: white;
-            padding: 0.3rem 0.8rem;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            transition: all 0.3s ease;
-            border: 1px solid var(--color-white-30);
-        }
-
-        .skill-tag:hover {
-            transform: scale(1.05);
-            background: var(--color-white-30);
-            box-shadow: 0 5px 15px var(--color-black-30);
-        }
-
-        /* Certifications */
-        .certifications-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 1.5rem;
-        }
-
-        .cert-card {
-            background: var(--color-white-10);
-            border-radius: 20px;
-            padding: 1.5rem;
-            backdrop-filter: blur(20px);
-            border: 1px solid var(--color-white-20);
-            box-shadow: 0 8px 32px var(--color-black-30);
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .cert-card:hover {
-            transform: var(--hover-transform);
-            box-shadow: 0 15px 35px var(--color-black-30);
-        }
-
-        .cert-icon {
-            font-size: 2rem;
-            color: var(--color-white);
-            margin-bottom: 1rem;
-        }
-
-        .cert-name {
-            font-weight: 600;
-            color: var(--color-white);
-            margin-bottom: 0.5rem;
-        }
-
-        .cert-issuer {
-            color: var(--color-white-80);
-            font-size: 0.9rem;
-        }
-
-        /* Projects Section */
-        .projects-section {
-            margin-bottom: 3rem;
-        }
-
-        .project-card {
-            background: var(--color-white-10);
-            backdrop-filter: blur(20px);
-            border: 1px solid var(--color-white-20);
-            border-radius: 20px;
-            padding: 2rem;
-            margin-bottom: 1.5rem;
-            transition: all 0.3s ease;
-            box-shadow: 0 8px 32px var(--color-black-30);
-        }
-
-        .project-card:hover {
-            transform: var(--hover-transform);
-            box-shadow: 0 15px 40px var(--color-black-30);
-        }
-
-        .project-title {
-            font-size: 1.3rem;
-            margin-bottom: 0.5rem;
-            color: var(--color-white);
-        }
-
-        .project-date {
-            font-size: 0.9rem;
-            opacity: 0.8;
-            margin-bottom: 1rem;
-            color: var(--color-white-80);
-        }
-
-        .project-card p {
-            color: var(--color-white);
-            opacity: 0.9;
-        }
-
-        /* Responsive Design */
-        @media (max-width: 768px) {
             body {
+                font-family:
+                    "SF Pro Display",
+                    -apple-system,
+                    BlinkMacSystemFont,
+                    "Segoe UI",
+                    Roboto,
+                    "Helvetica Neue",
+                    Arial,
+                    sans-serif;
+                line-height: 1.6;
+                color: white;
+                background: linear-gradient(
+                    180deg,
+                    rgb(102 126 234) 0%,
+                    rgb(118 75 162) 100%
+                );
+                min-height: 100vh;
+                position: relative;
                 overflow-x: hidden;
-                padding-left: 8px;
-                padding-right: 8px;
             }
 
-            h1 {
-                font-size: 2.5rem;
-            }
-
-            .tagline {
-                font-size: 1.1rem;
-            }
-
-            .contact-links {
-                justify-content: center;
-            }
-
-            .company-header {
-                flex-direction: column;
-                gap: 1rem;
-            }
-
-            .section {
-                margin-bottom: 2rem;
-            }
-        }
-
-        /* Print Styles */
-        @media print {
-            body {
-                background: white;
-                color: var(--text-dark);
-            }
-
+            /* Floating shapes animation */
             .floating-shapes {
-                display: none;
+                position: fixed;
+                width: 100%;
+                height: 100%;
+                top: 0;
+                left: 0;
+                pointer-events: none;
+                z-index: 1;
             }
 
+            .shape {
+                position: absolute;
+                background: rgb(255 255 255 / 10%);
+                border-radius: 50%;
+                animation: float-shape 20s infinite linear;
+            }
+
+            .shape:nth-child(1) {
+                width: 80px;
+                height: 80px;
+                left: 10%;
+                animation-delay: 0s;
+            }
+
+            .shape:nth-child(2) {
+                width: 120px;
+                height: 120px;
+                left: 70%;
+                animation-delay: 5s;
+            }
+
+            .shape:nth-child(3) {
+                width: 60px;
+                height: 60px;
+                left: 40%;
+                animation-delay: 10s;
+            }
+
+            .shape:nth-child(4) {
+                width: 90px;
+                height: 90px;
+                left: 80%;
+                animation-delay: 15s;
+            }
+
+            @keyframes float-shape {
+                0% {
+                    transform: translateY(100vh) rotate(0deg);
+                    opacity: 0;
+                }
+                10% {
+                    opacity: 1;
+                }
+                90% {
+                    opacity: 1;
+                }
+                100% {
+                    transform: translateY(-100px) rotate(360deg);
+                    opacity: 0;
+                }
+            }
+
+            /* Dynamic Header */
             .header {
-                background: none;
-                color: var(--text-dark);
-                padding: 1rem 0;
+                color: white;
+                padding: 4rem 0 2rem;
+                position: relative;
+                z-index: 10;
+                text-align: center;
             }
 
             .header-content {
-                background: none;
-                backdrop-filter: none;
-                border: 1px solid #ddd;
-                box-shadow: none;
+                max-width: 800px;
+                margin: 0 auto;
+                padding: 2rem;
+                background: rgb(255 255 255 / 10%);
+                border-radius: 20px;
+                backdrop-filter: blur(20px);
+                border: 1px solid rgb(255 255 255 / 20%);
+                box-shadow: 0 8px 32px rgb(0 0 0 / 30%);
+                animation: slide-down 1s ease-out;
             }
 
-            h1, .tagline {
-                color: var(--text-dark);
+            @keyframes slide-down {
+                from {
+                    opacity: 0;
+                    transform: translateY(-30px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+
+            h1 {
+                font-size: 3rem;
+                font-weight: 700;
+                margin-bottom: 0.5rem;
+                background: linear-gradient(
+                    45deg,
+                    var(--color-white),
+                    var(--color-white-light)
+                );
+                background-clip: text;
+                -webkit-text-fill-color: transparent;
+            }
+
+            .tagline {
+                font-size: 1.3rem;
+                opacity: 0.9;
+                font-weight: 300;
+                margin-bottom: 2rem;
+            }
+
+            .contact-links {
+                display: flex;
+                gap: 1.5rem;
+                flex-wrap: wrap;
+                justify-content: center;
             }
 
             .contact-link {
-                color: var(--accent-color);
-                border-color: var(--accent-color);
-                background: none;
+                color: white;
+                text-decoration: none;
+                display: inline-flex;
+                align-items: center;
+                gap: 0.5rem;
+                padding: 0.75rem 1.5rem;
+                border: 1px solid var(--color-white-30);
+                border-radius: 25px;
+                transition: all 0.3s ease;
+                background: var(--color-white-20);
+                font-weight: 500;
             }
 
-            .summary-section,
-            .experience-card,
-            .skill-category,
-            .cert-card,
-            .project-card {
-                background: white;
-                box-shadow: none;
-                border: 1px solid #ddd;
-                backdrop-filter: none;
+            .contact-link:hover {
+                transform: var(--hover-transform);
+                background: var(--color-white-30);
+                box-shadow: 0 5px 15px var(--color-black-30);
             }
 
-            .summary-text,
-            .section h2,
-            .company-info h3,
-            .role,
-            .achievements li,
-            .skill-category h4,
-            .cert-name,
-            .project-title,
-            .experience-card p,
-            .project-card p {
-                color: var(--text-dark);
+            @keyframes slideInLeft {
+                from {
+                    opacity: 0;
+                    transform: translateX(-50px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateX(0);
+                }
+            }
+
+            /* Main Content */
+            .container {
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 2rem;
+                position: relative;
+                z-index: 10;
+            }
+
+            /* Professional Summary */
+            .summary-section {
+                background: var(--color-white-10);
+                padding: 2rem;
+                border-radius: 20px;
+                margin: 2rem auto 3rem;
+                max-width: 1000px;
+                backdrop-filter: blur(20px);
+                border: 1px solid var(--color-white-20);
+                box-shadow: 0 8px 32px var(--color-black-30);
+                animation: slide-up 1s ease-out;
+            }
+
+            @keyframes slide-up {
+                from {
+                    opacity: 0;
+                    transform: translateY(30px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+
+            .summary-section h2 {
+                color: var(--color-white);
+                margin-bottom: 1rem;
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+            }
+
+            .summary-text {
+                color: var(--color-white);
+                line-height: 1.8;
+                font-size: 1.1rem;
+                opacity: 0.9;
             }
 
             .highlight {
-                color: var(--accent-color);
+                font-weight: 600;
+                color: var(--color-success);
             }
 
-            .date-range,
+            /* Section Styles */
+            .section {
+                margin-bottom: 3rem;
+            }
+
+            .section-header {
+                display: flex;
+                align-items: center;
+                gap: 1rem;
+                margin-bottom: 2rem;
+                padding-bottom: 1rem;
+                border-bottom: 2px solid var(--color-white-20);
+            }
+
+            .section-icon {
+                width: 40px;
+                height: 40px;
+                background: var(--color-white-20);
+                border-radius: 10px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                color: white;
+                font-size: 1.2rem;
+            }
+
+            .section h2 {
+                color: var(--color-white);
+                font-size: 2rem;
+                margin: 0;
+            }
+
+            /* Work Experience Cards */
+            .experience-card {
+                background: var(--color-white-10);
+                border-radius: 20px;
+                padding: 2rem;
+                margin-bottom: 2rem;
+                backdrop-filter: blur(20px);
+                border: 1px solid var(--color-white-20);
+                box-shadow: 0 8px 32px var(--color-black-30);
+                transition: all 0.3s ease;
+            }
+
+            .experience-card:hover {
+                transform: var(--hover-transform);
+                box-shadow: 0 15px 40px var(--color-black-30);
+            }
+
+            .company-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: flex-start;
+                flex-wrap: wrap;
+                margin-bottom: 1rem;
+            }
+
+            .company-info h3 {
+                color: var(--color-white);
+                font-size: 1.5rem;
+                margin-bottom: 0.25rem;
+            }
+
+            .company-details {
+                color: var(--color-white-80);
+                font-size: 0.95rem;
+            }
+
+            .date-range {
+                background: var(--color-white-20);
+                color: white;
+                padding: 0.25rem 1rem;
+                border-radius: 20px;
+                font-size: 0.9rem;
+                white-space: nowrap;
+                border: 1px solid var(--color-white-30);
+            }
+
+            .role {
+                font-weight: 600;
+                color: var(--color-white);
+                margin: 1rem 0 0.5rem;
+                font-size: 1.1rem;
+            }
+
+            .experience-card p {
+                color: var(--color-white);
+                opacity: 0.9;
+                margin-bottom: 1rem;
+            }
+
+            .achievements {
+                list-style: none;
+                padding: 0;
+            }
+
+            .achievements li {
+                position: relative;
+                padding-left: 2rem;
+                margin-bottom: 0.8rem;
+                color: var(--color-white);
+                line-height: 1.6;
+                opacity: 0.9;
+            }
+
+            .achievements li::before {
+                content: "▸";
+                position: absolute;
+                left: 0;
+                color: var(--color-success);
+                font-size: 1.2rem;
+                font-weight: bold;
+            }
+
+            /* Skills Grid */
+            .skills-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+                gap: 1.5rem;
+            }
+
+            .skill-category {
+                background: var(--color-white-10);
+                border-radius: 20px;
+                padding: 1.5rem;
+                backdrop-filter: blur(20px);
+                border: 1px solid var(--color-white-20);
+                box-shadow: 0 8px 32px var(--color-black-30);
+                transition: all 0.3s ease;
+            }
+
+            .skill-category:hover {
+                transform: var(--hover-transform);
+                box-shadow: 0 15px 35px var(--color-black-30);
+            }
+
+            .skill-category h4 {
+                color: var(--color-white);
+                margin-bottom: 1rem;
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+            }
+
+            .skill-tags {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 0.5rem;
+            }
+
             .skill-tag {
-                background: none;
-                border: 1px solid var(--accent-color);
-                color: var(--accent-color);
+                background: var(--color-white-20);
+                color: white;
+                padding: 0.3rem 0.8rem;
+                border-radius: 20px;
+                font-size: 0.85rem;
+                transition: all 0.3s ease;
+                border: 1px solid var(--color-white-30);
             }
-        }
-    </style>
-</head>
-<body>
-    <!-- Floating shapes animation -->
-    <div class="floating-shapes">
-        <div class="shape"></div>
-        <div class="shape"></div>
-        <div class="shape"></div>
-        <div class="shape"></div>
-    </div>
 
-    <!-- Dynamic Header -->
-    <header class="header">
-        <div class="header-content">
-            <h1>Peter Hollmer</h1>
-            <p class="tagline">Senior Technical Operations & Engineering Leadership</p>
-            <div class="contact-links">
-                <a href="https://linkedin.com/in/phollmer" class="contact-link">
-                    <i class="fab fa-linkedin"></i> LinkedIn
-                </a>
-                <a href="https://peterhollmer.com" class="contact-link">
-                    <i class="fas fa-globe"></i> Website
-                </a>
-                <a href="https://github.com/VerilyPete" class="contact-link">
-                    <i class="fab fa-github"></i> GitHub
-                </a>
-            </div>
+            .skill-tag:hover {
+                transform: scale(1.05);
+                background: var(--color-white-30);
+                box-shadow: 0 5px 15px var(--color-black-30);
+            }
+
+            /* Certifications */
+            .certifications-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+                gap: 1.5rem;
+            }
+
+            .cert-card {
+                background: var(--color-white-10);
+                border-radius: 20px;
+                padding: 1.5rem;
+                backdrop-filter: blur(20px);
+                border: 1px solid var(--color-white-20);
+                box-shadow: 0 8px 32px var(--color-black-30);
+                transition: all 0.3s ease;
+                position: relative;
+                overflow: hidden;
+            }
+
+            .cert-card:hover {
+                transform: var(--hover-transform);
+                box-shadow: 0 15px 35px var(--color-black-30);
+            }
+
+            .cert-icon {
+                font-size: 2rem;
+                color: var(--color-white);
+                margin-bottom: 1rem;
+            }
+
+            .cert-name {
+                font-weight: 600;
+                color: var(--color-white);
+                margin-bottom: 0.5rem;
+            }
+
+            .cert-issuer {
+                color: var(--color-white-80);
+                font-size: 0.9rem;
+            }
+
+            /* Projects Section */
+            .projects-section {
+                margin-bottom: 3rem;
+            }
+
+            .project-card {
+                background: var(--color-white-10);
+                backdrop-filter: blur(20px);
+                border: 1px solid var(--color-white-20);
+                border-radius: 20px;
+                padding: 2rem;
+                margin-bottom: 1.5rem;
+                transition: all 0.3s ease;
+                box-shadow: 0 8px 32px var(--color-black-30);
+            }
+
+            .project-card:hover {
+                transform: var(--hover-transform);
+                box-shadow: 0 15px 40px var(--color-black-30);
+            }
+
+            .project-title {
+                font-size: 1.3rem;
+                margin-bottom: 0.5rem;
+                color: var(--color-white);
+            }
+
+            .project-date {
+                font-size: 0.9rem;
+                opacity: 0.8;
+                margin-bottom: 1rem;
+                color: var(--color-white-80);
+            }
+
+            .project-card p {
+                color: var(--color-white);
+                opacity: 0.9;
+            }
+
+            /* Responsive Design */
+            @media (max-width: 768px) {
+                body {
+                    overflow-x: hidden;
+                    padding-left: 8px;
+                    padding-right: 8px;
+                }
+
+                h1 {
+                    font-size: 2.5rem;
+                }
+
+                .tagline {
+                    font-size: 1.1rem;
+                }
+
+                .contact-links {
+                    justify-content: center;
+                }
+
+                .company-header {
+                    flex-direction: column;
+                    gap: 1rem;
+                }
+
+                .section {
+                    margin-bottom: 2rem;
+                }
+            }
+
+            /* Print Styles */
+            @media print {
+                body {
+                    background: white;
+                    color: var(--text-dark);
+                }
+
+                .floating-shapes {
+                    display: none;
+                }
+
+                .header {
+                    background: none;
+                    color: var(--text-dark);
+                    padding: 1rem 0;
+                }
+
+                .header-content {
+                    background: none;
+                    backdrop-filter: none;
+                    border: 1px solid #ddd;
+                    box-shadow: none;
+                }
+
+                h1,
+                .tagline {
+                    color: var(--text-dark);
+                }
+
+                .contact-link {
+                    color: var(--accent-color);
+                    border-color: var(--accent-color);
+                    background: none;
+                }
+
+                .summary-section,
+                .experience-card,
+                .skill-category,
+                .cert-card,
+                .project-card {
+                    background: white;
+                    box-shadow: none;
+                    border: 1px solid #ddd;
+                    backdrop-filter: none;
+                }
+
+                .summary-text,
+                .section h2,
+                .company-info h3,
+                .role,
+                .achievements li,
+                .skill-category h4,
+                .cert-name,
+                .project-title,
+                .experience-card p,
+                .project-card p {
+                    color: var(--text-dark);
+                }
+
+                .highlight {
+                    color: var(--accent-color);
+                }
+
+                .date-range,
+                .skill-tag {
+                    background: none;
+                    border: 1px solid var(--accent-color);
+                    color: var(--accent-color);
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <!-- Floating shapes animation -->
+        <div class="floating-shapes">
+            <div class="shape"></div>
+            <div class="shape"></div>
+            <div class="shape"></div>
+            <div class="shape"></div>
         </div>
-    </header>
 
-    <!-- Professional Summary -->
-    <section class="summary-section">
-        <h2><i class="fas fa-user-tie"></i> Professional Summary</h2>
-        <p class="summary-text">
-            Engineering leader that coached junior team through <span class="highlight">40% layoffs</span> and cultural transformation during peak COVID, achieving <span class="highlight">60% productivity increase</span> while building psychological safety entirely remotely. Expert at managing critical customer escalations while strengthening client confidence and reducing future incidents. I've cut support resolution time by <span class="highlight">42%</span> and AWS costs by <span class="highlight">35%</span> by fostering deep cross-team collaboration and empowering engineers to investigate root causes. Known for maintaining psychological safety through multiple reorganizations while delivering consistent results for enterprise B2B SaaS customers.
-        </p>
-    </section>
-
-    <div class="container">
-        <!-- Work Experience -->
-        <section class="section">
-            <div class="section-header">
-                <div class="section-icon">
-                    <i class="fas fa-briefcase"></i>
+        <!-- Dynamic Header -->
+        <header class="header">
+            <div class="header-content">
+                <h1>Peter Hollmer</h1>
+                <p class="tagline">
+                    Senior Technical Operations & Engineering Leadership
+                </p>
+                <div class="contact-links">
+                    <a
+                        href="https://linkedin.com/in/phollmer"
+                        class="contact-link"
+                    >
+                        <i class="fab fa-linkedin"></i> LinkedIn
+                    </a>
+                    <a href="https://peterhollmer.com" class="contact-link">
+                        <i class="fas fa-globe"></i> Website
+                    </a>
+                    <a
+                        href="https://github.com/VerilyPete"
+                        class="contact-link"
+                    >
+                        <i class="fab fa-github"></i> GitHub
+                    </a>
                 </div>
-                <h2>Work Experience</h2>
             </div>
+        </header>
 
-            <div class="experience-card">
-                <div class="company-header">
-                    <div class="company-info">
-                        <h3>SnapStream</h3>
-                        <p class="company-details">Houston, Texas</p>
-                    </div>
-                    <span class="date-range">09/2016 - 04/2024</span>
-                </div>
-
-                <div class="role">Director Of Engineering (08/2021 - 04/2024)</div>
-                <p>Led an organization of 3 managers with 14 total reports spanning engineering, support, and infrastructure teams while serving on leadership team for $10M ARR B2B SaaS video software company serving enterprise clients including government and broadcast media.</p>
-                <ul class="achievements">
-                    <li>Led the company's critical customer incidents as the primary technical contact, resolving high-priority issues while keeping customers informed and strengthening their confidence in the company</li>
-                    <li>Improved support processes by implementing better ticket routing and self-service options, reducing ticket volume by <span class="highlight">28%</span> and resolution time by <span class="highlight">42%</span> while improving first-contact resolution by <span class="highlight">18%</span></li>
-                    <li>Instilled culture of ownership and continuous improvement where teams proactively identify patterns in incidents, take responsibility for solutions, and drive infrastructure investments based on data</li>
-                    <li>Led AI feature development including automated clip summaries, titles, and chapter generation of in-progress recordings, built as serverless microservices utilizing Amazon's hosted AI offerings</li>
-                    <li>Reduced operating costs approximately <span class="highlight">30%</span> while improving service reliability by strategically redesigning infrastructure across multiple geographically separated datacenters</li>
-                    <li>Modernized DevOps infrastructure by migrating from on-premise Bitbucket/Jenkins to GitHub Actions and automating deployments, reducing deployment time from 6 hours to <span class="highlight">45 minutes</span> while nearly eliminating non-defect related build failures</li>
-                </ul>
-
-                <div class="role">Software Engineering Manager (01/2021 - 08/2021)</div>
-                <p>Led engineering team during critical transition after director's departure, navigating <span class="highlight">40% workforce reduction</span> while shifting from command-and-control culture to an empowered, self-directed team. Helped junior developers who were used to being told exactly what to do become confident problem-solvers during peak COVID uncertainty, building trust and teaching new skills entirely through Zoom.</p>
-                <ul class="achievements">
-                    <li>Fostered quality-focused culture by limiting work-in-progress and tracking cycle time, decreasing defect escape rate by <span class="highlight">40%</span> while increasing throughput <span class="highlight">60%</span></li>
-                    <li>Established customer-centric product roadmap with quarterly release cadence, implementing weekly check-ins with product and support teams</li>
-                    <li>Decreased monthly AWS spend <span class="highlight">35%</span> while increasing end-user performance by transitioning to managed services and optimized instance types</li>
-                    <li>Created technical knowledge sharing program through bi-weekly Lunch & Learn sessions, encouraging staff participation by incorporating learning and presentation of new topics as annual performance goals</li>
-                </ul>
-
-                <div class="role">Software Quality Assurance Manager (09/2016 - 01/2021)</div>
-                <p>Led team of five QA engineers while serving as primary escalation point for complex customer support issues across B2B SaaS platform.</p>
-                <ul class="achievements">
-                    <li>Resolved critical client situations by leveraging in-depth understanding of hardware/software stack and recreating customer environments in-house</li>
-                    <li>Conducted recurring meetings with pilot customers during product development to gather feedback and transform insights into actionable engineering plans</li>
-                    <li>Achieved test completion <span class="highlight">30% faster</span> without reducing coverage by refining regression test processes and upgrading tooling</li>
-                    <li>Orchestrated product testing for multiple products spanning web, mobile (iOS/Android), tablet (iPadOS) and set-top box (Android) platforms</li>
-                </ul>
-            </div>
-
-            <div class="experience-card">
-                <div class="company-header">
-                    <div class="company-info">
-                        <h3>Swimlane</h3>
-                        <p class="company-details">Houston, Texas (Remote)</p>
-                    </div>
-                    <span class="date-range">12/2015 - 03/2016</span>
-                </div>
-                <div class="role">Senior Software Quality Assurance Engineer</div>
-                <ul class="achievements">
-                    <li>Expanded QA scope to include DevOps process implementation, ensuring the uptime and availability of AWS-based testing and development environments</li>
-                    <li>Bridged support and engineering teams to ensure customer-impacting bugs were prioritized and resolved based on actual business impact rather than just technical severity</li>
-                    <li>Implemented automated deployment of testing environments, returning hours of previously wasted time to the team each sprint</li>
-                </ul>
-            </div>
-
-            <div class="experience-card">
-                <div class="company-header">
-                    <div class="company-info">
-                        <h3>CS Disco</h3>
-                        <p class="company-details">Houston, Texas</p>
-                    </div>
-                    <span class="date-range">03/2015 - 12/2015</span>
-                </div>
-                <div class="role">Senior Software Quality Assurance Engineer</div>
-                <ul class="achievements">
-                    <li>Supervised testing efforts for deployment team building new features and maintaining core SaaS application</li>
-                    <li>Used deep application and infrastructure knowledge to help customer success team quickly identify root causes of reported issues and collaborate with product management on resolution strategies</li>
-                </ul>
-            </div>
-
-            <div class="experience-card">
-                <div class="company-header">
-                    <div class="company-info">
-                        <h3>Sony Creative Software</h3>
-                        <p class="company-details">Houston, Texas Area (Remote)</p>
-                    </div>
-                    <span class="date-range">06/2007 - 03/2015</span>
-                </div>
-                <div class="role">Staff Software Quality Assurance Engineer</div>
-                <ul class="achievements">
-                    <li>Led QA on Sound Forge product line while contributing to Sony Vegas and Sony Catalyst prosumer and professional applications</li>
-                    <li>Worked with engineering teams across multiple time zones to maintain consistent testing standards and quality processes for Sony-developed integrations for Avid Media Composer</li>
-                    <li>Conducted extensive test planning and functional, performance, and usability testing of local applications and Sony's Ecommerce platform</li>
-                </ul>
-            </div>
+        <!-- Professional Summary -->
+        <section class="summary-section">
+            <h2><i class="fas fa-user-tie"></i> Professional Summary</h2>
+            <p class="summary-text">
+                Engineering leader that coached junior team through
+                <span class="highlight">40% layoffs</span> and cultural
+                transformation during peak COVID, achieving
+                <span class="highlight">60% productivity increase</span> while
+                building psychological safety entirely remotely. Expert at
+                managing critical customer escalations while strengthening
+                client confidence and reducing future incidents. I've cut
+                support resolution time by
+                <span class="highlight">42%</span> and AWS costs by
+                <span class="highlight">35%</span> by fostering deep cross-team
+                collaboration and empowering engineers to investigate root
+                causes. Known for maintaining psychological safety through
+                multiple reorganizations while delivering consistent results for
+                enterprise B2B SaaS customers.
+            </p>
         </section>
 
-        <!-- Technical Skills -->
-        <section class="section">
-            <div class="section-header">
-                <div class="section-icon">
-                    <i class="fas fa-code"></i>
+        <div class="container">
+            <!-- Work Experience -->
+            <section class="section">
+                <div class="section-header">
+                    <div class="section-icon">
+                        <i class="fas fa-briefcase"></i>
+                    </div>
+                    <h2>Work Experience</h2>
                 </div>
-                <h2>Technical Skills</h2>
-            </div>
 
-            <div class="skills-grid">
-                <div class="skill-category">
-                    <h4><i class="fas fa-cloud"></i> Cloud & Infrastructure</h4>
-                    <div class="skill-tags">
-                        <span class="skill-tag">AWS</span>
-                        <span class="skill-tag">Oracle Cloud</span>
-                        <span class="skill-tag">Infrastructure as Code (Terraform)</span>
-                        <span class="skill-tag">Docker</span>
-                        <span class="skill-tag">Podman</span>
-                        <span class="skill-tag">Kubernetes</span>
+                <div class="experience-card">
+                    <div class="company-header">
+                        <div class="company-info">
+                            <h3>SnapStream</h3>
+                            <p class="company-details">Houston, Texas</p>
+                        </div>
+                        <span class="date-range">09/2016 - 04/2024</span>
+                    </div>
+
+                    <div class="role">
+                        Director Of Engineering (08/2021 - 04/2024)
+                    </div>
+                    <p>
+                        Led an organization of 3 managers with 14 total reports
+                        spanning engineering, support, and infrastructure teams
+                        while serving on leadership team for $10M ARR B2B SaaS
+                        video software company serving enterprise clients
+                        including government and broadcast media.
+                    </p>
+                    <ul class="achievements">
+                        <li>
+                            Led the company's critical customer incidents as the
+                            primary technical contact, resolving high-priority
+                            issues while keeping customers informed and
+                            strengthening their confidence in the company
+                        </li>
+                        <li>
+                            Improved support processes by implementing better
+                            ticket routing and self-service options, reducing
+                            ticket volume by
+                            <span class="highlight">28%</span> and resolution
+                            time by <span class="highlight">42%</span> while
+                            improving first-contact resolution by
+                            <span class="highlight">18%</span>
+                        </li>
+                        <li>
+                            Instilled culture of ownership and continuous
+                            improvement where teams proactively identify
+                            patterns in incidents, take responsibility for
+                            solutions, and drive infrastructure investments
+                            based on data
+                        </li>
+                        <li>
+                            Led AI feature development including automated clip
+                            summaries, titles, and chapter generation of
+                            in-progress recordings, built as serverless
+                            microservices utilizing Amazon's hosted AI offerings
+                        </li>
+                        <li>
+                            Reduced operating costs approximately
+                            <span class="highlight">30%</span> while improving
+                            service reliability by strategically redesigning
+                            infrastructure across multiple geographically
+                            separated datacenters
+                        </li>
+                        <li>
+                            Modernized DevOps infrastructure by migrating from
+                            on-premise Bitbucket/Jenkins to GitHub Actions and
+                            automating deployments, reducing deployment time
+                            from 6 hours to
+                            <span class="highlight">45 minutes</span> while
+                            nearly eliminating non-defect related build failures
+                        </li>
+                    </ul>
+
+                    <div class="role">
+                        Software Engineering Manager (01/2021 - 08/2021)
+                    </div>
+                    <p>
+                        Led engineering team during critical transition after
+                        director's departure, navigating
+                        <span class="highlight">40% workforce reduction</span>
+                        while shifting from command-and-control culture to an
+                        empowered, self-directed team. Helped junior developers
+                        who were used to being told exactly what to do become
+                        confident problem-solvers during peak COVID uncertainty,
+                        building trust and teaching new skills entirely through
+                        Zoom.
+                    </p>
+                    <ul class="achievements">
+                        <li>
+                            Fostered quality-focused culture by limiting
+                            work-in-progress and tracking cycle time, decreasing
+                            defect escape rate by
+                            <span class="highlight">40%</span> while increasing
+                            throughput <span class="highlight">60%</span>
+                        </li>
+                        <li>
+                            Established customer-centric product roadmap with
+                            quarterly release cadence, implementing weekly
+                            check-ins with product and support teams
+                        </li>
+                        <li>
+                            Decreased monthly AWS spend
+                            <span class="highlight">35%</span> while increasing
+                            end-user performance by transitioning to managed
+                            services and optimized instance types
+                        </li>
+                        <li>
+                            Created technical knowledge sharing program through
+                            bi-weekly Lunch & Learn sessions, encouraging staff
+                            participation by incorporating learning and
+                            presentation of new topics as annual performance
+                            goals
+                        </li>
+                    </ul>
+
+                    <div class="role">
+                        Software Quality Assurance Manager (09/2016 - 01/2021)
+                    </div>
+                    <p>
+                        Led team of five QA engineers while serving as primary
+                        escalation point for complex customer support issues
+                        across B2B SaaS platform.
+                    </p>
+                    <ul class="achievements">
+                        <li>
+                            Resolved critical client situations by leveraging
+                            in-depth understanding of hardware/software stack
+                            and recreating customer environments in-house
+                        </li>
+                        <li>
+                            Conducted recurring meetings with pilot customers
+                            during product development to gather feedback and
+                            transform insights into actionable engineering plans
+                        </li>
+                        <li>
+                            Achieved test completion
+                            <span class="highlight">30% faster</span> without
+                            reducing coverage by refining regression test
+                            processes and upgrading tooling
+                        </li>
+                        <li>
+                            Orchestrated product testing for multiple products
+                            spanning web, mobile (iOS/Android), tablet (iPadOS)
+                            and set-top box (Android) platforms
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="experience-card">
+                    <div class="company-header">
+                        <div class="company-info">
+                            <h3>Swimlane</h3>
+                            <p class="company-details">
+                                Houston, Texas (Remote)
+                            </p>
+                        </div>
+                        <span class="date-range">12/2015 - 03/2016</span>
+                    </div>
+                    <div class="role">
+                        Senior Software Quality Assurance Engineer
+                    </div>
+                    <ul class="achievements">
+                        <li>
+                            Expanded QA scope to include DevOps process
+                            implementation, ensuring the uptime and availability
+                            of AWS-based testing and development environments
+                        </li>
+                        <li>
+                            Bridged support and engineering teams to ensure
+                            customer-impacting bugs were prioritized and
+                            resolved based on actual business impact rather than
+                            just technical severity
+                        </li>
+                        <li>
+                            Implemented automated deployment of testing
+                            environments, returning hours of previously wasted
+                            time to the team each sprint
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="experience-card">
+                    <div class="company-header">
+                        <div class="company-info">
+                            <h3>CS Disco</h3>
+                            <p class="company-details">Houston, Texas</p>
+                        </div>
+                        <span class="date-range">03/2015 - 12/2015</span>
+                    </div>
+                    <div class="role">
+                        Senior Software Quality Assurance Engineer
+                    </div>
+                    <ul class="achievements">
+                        <li>
+                            Supervised testing efforts for deployment team
+                            building new features and maintaining core SaaS
+                            application
+                        </li>
+                        <li>
+                            Used deep application and infrastructure knowledge
+                            to help customer success team quickly identify root
+                            causes of reported issues and collaborate with
+                            product management on resolution strategies
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="experience-card">
+                    <div class="company-header">
+                        <div class="company-info">
+                            <h3>Sony Creative Software</h3>
+                            <p class="company-details">
+                                Houston, Texas Area (Remote)
+                            </p>
+                        </div>
+                        <span class="date-range">06/2007 - 03/2015</span>
+                    </div>
+                    <div class="role">
+                        Staff Software Quality Assurance Engineer
+                    </div>
+                    <ul class="achievements">
+                        <li>
+                            Led QA on Sound Forge product line while
+                            contributing to Sony Vegas and Sony Catalyst
+                            prosumer and professional applications
+                        </li>
+                        <li>
+                            Worked with engineering teams across multiple time
+                            zones to maintain consistent testing standards and
+                            quality processes for Sony-developed integrations
+                            for Avid Media Composer
+                        </li>
+                        <li>
+                            Conducted extensive test planning and functional,
+                            performance, and usability testing of local
+                            applications and Sony's Ecommerce platform
+                        </li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Technical Skills -->
+            <section class="section">
+                <div class="section-header">
+                    <div class="section-icon">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <h2>Technical Skills</h2>
+                </div>
+
+                <div class="skills-grid">
+                    <div class="skill-category">
+                        <h4>
+                            <i class="fas fa-cloud"></i> Cloud & Infrastructure
+                        </h4>
+                        <div class="skill-tags">
+                            <span class="skill-tag">AWS</span>
+                            <span class="skill-tag">Oracle Cloud</span>
+                            <span class="skill-tag"
+                                >Infrastructure as Code (Terraform)</span
+                            >
+                            <span class="skill-tag">Docker</span>
+                            <span class="skill-tag">Podman</span>
+                            <span class="skill-tag">Kubernetes</span>
+                        </div>
+                    </div>
+
+                    <div class="skill-category">
+                        <h4>
+                            <i class="fas fa-chart-line"></i> Incident &
+                            Observability
+                        </h4>
+                        <div class="skill-tags">
+                            <span class="skill-tag">Prometheus</span>
+                            <span class="skill-tag">Grafana</span>
+                            <span class="skill-tag">CloudWatch</span>
+                            <span class="skill-tag">Application Logs</span>
+                            <span class="skill-tag">Root Cause Analysis</span>
+                            <span class="skill-tag">Incident Response</span>
+                            <span class="skill-tag">Pattern Analysis</span>
+                            <span class="skill-tag">Escalation Management</span>
+                        </div>
+                    </div>
+
+                    <div class="skill-category">
+                        <h4><i class="fas fa-cogs"></i> DevOps & Automation</h4>
+                        <div class="skill-tags">
+                            <span class="skill-tag">GitHub Actions</span>
+                            <span class="skill-tag">Jenkins</span>
+                            <span class="skill-tag">CI/CD Pipelines</span>
+                            <span class="skill-tag"
+                                >Infrastructure Automation</span
+                            >
+                            <span class="skill-tag"
+                                >Zero-Downtime Deployments</span
+                            >
+                            <span class="skill-tag">Tailscale</span>
+                        </div>
+                    </div>
+
+                    <div class="skill-category">
+                        <h4><i class="fas fa-laptop-code"></i> Development</h4>
+                        <div class="skill-tags">
+                            <span class="skill-tag">Python</span>
+                            <span class="skill-tag">SQL</span>
+                            <span class="skill-tag">API Design</span>
+                            <span class="skill-tag">Microservices</span>
+                            <span class="skill-tag"
+                                >Serverless Architecture</span
+                            >
+                            <span class="skill-tag"
+                                >Test Automation (Selenium, Playwright)</span
+                            >
+                        </div>
+                    </div>
+
+                    <div class="skill-category">
+                        <h4>
+                            <i class="fas fa-users"></i> Leadership & Process
+                        </h4>
+                        <div class="skill-tags">
+                            <span class="skill-tag">Agile/Scrum</span>
+                            <span class="skill-tag">OKRs</span>
+                            <span class="skill-tag"
+                                >Cross-team Collaboration</span
+                            >
+                            <span class="skill-tag">Vendor Management</span>
+                            <span class="skill-tag">Budget Planning</span>
+                            <span class="skill-tag">Team Scaling</span>
+                        </div>
                     </div>
                 </div>
+            </section>
 
-                <div class="skill-category">
-                    <h4><i class="fas fa-chart-line"></i> Incident & Observability</h4>
-                    <div class="skill-tags">
-                        <span class="skill-tag">Prometheus</span>
-                        <span class="skill-tag">Grafana</span>
-                        <span class="skill-tag">CloudWatch</span>
-                        <span class="skill-tag">Application Logs</span>
-                        <span class="skill-tag">Root Cause Analysis</span>
-                        <span class="skill-tag">Incident Response</span>
-                        <span class="skill-tag">Pattern Analysis</span>
-                        <span class="skill-tag">Escalation Management</span>
+            <!-- Certifications -->
+            <section class="section">
+                <div class="section-header">
+                    <div class="section-icon">
+                        <i class="fas fa-certificate"></i>
+                    </div>
+                    <h2>Certifications</h2>
+                </div>
+
+                <div class="certifications-grid">
+                    <div class="cert-card">
+                        <i class="fas fa-award cert-icon"></i>
+                        <div class="cert-name">Professional Scrum Master I</div>
+                        <div class="cert-issuer">
+                            Scrum.org • 08/2020 - Present
+                        </div>
+                    </div>
+
+                    <div class="cert-card">
+                        <i class="fab fa-aws cert-icon"></i>
+                        <div class="cert-name">
+                            AWS Certified Solutions Architect
+                        </div>
+                        <div class="cert-issuer">
+                            Amazon Web Services • 2025
+                        </div>
+                    </div>
+
+                    <div class="cert-card">
+                        <i class="fab fa-swift cert-icon"></i>
+                        <div class="cert-name">
+                            Swift Programming for Mobile App Development
+                        </div>
+                        <div class="cert-issuer">
+                            Educative • 06/2024 - Present
+                        </div>
                     </div>
                 </div>
+            </section>
 
-                <div class="skill-category">
-                    <h4><i class="fas fa-cogs"></i> DevOps & Automation</h4>
-                    <div class="skill-tags">
-                        <span class="skill-tag">GitHub Actions</span>
-                        <span class="skill-tag">Jenkins</span>
-                        <span class="skill-tag">CI/CD Pipelines</span>
-                        <span class="skill-tag">Infrastructure Automation</span>
-                        <span class="skill-tag">Zero-Downtime Deployments</span>
-                        <span class="skill-tag">Tailscale</span>
+            <!-- Recent Projects -->
+            <section class="section projects-section">
+                <div class="section-header">
+                    <div class="section-icon">
+                        <i class="fas fa-rocket"></i>
                     </div>
+                    <h2>Recent Projects</h2>
                 </div>
 
-                <div class="skill-category">
-                    <h4><i class="fas fa-laptop-code"></i> Development</h4>
-                    <div class="skill-tags">
-                        <span class="skill-tag">Python</span>
-                        <span class="skill-tag">SQL</span>
-                        <span class="skill-tag">API Design</span>
-                        <span class="skill-tag">Microservices</span>
-                        <span class="skill-tag">Serverless Architecture</span>
-                        <span class="skill-tag">Test Automation (Selenium, Playwright)</span>
-                    </div>
+                <div class="project-card">
+                    <h3 class="project-title">
+                        Cloud Infrastructure & DevOps Platform
+                    </h3>
+                    <p class="project-date">01/2025 - Present</p>
+                    <p>
+                        Built and deployed containerized web infrastructure on
+                        Oracle Cloud that updates without downtime using GitHub
+                        Actions. Set up monitoring with Prometheus and Grafana
+                        to track container, system, and application metrics.
+                        Used Podman containers and Tailscale VPN for secure
+                        access within private subnets. Cut deployment time from
+                        manual processes to automated 3-minute updates.
+                    </p>
                 </div>
 
-                <div class="skill-category">
-                    <h4><i class="fas fa-users"></i> Leadership & Process</h4>
-                    <div class="skill-tags">
-                        <span class="skill-tag">Agile/Scrum</span>
-                        <span class="skill-tag">OKRs</span>
-                        <span class="skill-tag">Cross-team Collaboration</span>
-                        <span class="skill-tag">Vendor Management</span>
-                        <span class="skill-tag">Budget Planning</span>
-                        <span class="skill-tag">Team Scaling</span>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Certifications -->
-        <section class="section">
-            <div class="section-header">
-                <div class="section-icon">
-                    <i class="fas fa-certificate"></i>
-                </div>
-                <h2>Certifications</h2>
-            </div>
-
-            <div class="certifications-grid">
-                <div class="cert-card">
-                    <i class="fas fa-award cert-icon"></i>
-                    <div class="cert-name">Professional Scrum Master I</div>
-                    <div class="cert-issuer">Scrum.org • 08/2020 - Present</div>
+                <div class="project-card">
+                    <h3 class="project-title">Personal Website & Portfolio</h3>
+                    <p class="project-date">12/2024 - Present</p>
+                    <p>
+                        Developed and launched peterhollmer.com as a
+                        professional portfolio showcasing technical leadership
+                        experience. Implemented responsive design, contact form
+                        integration, and performance optimization achieving
+                        sub-second load times.
+                    </p>
                 </div>
 
-                <div class="cert-card">
-                    <i class="fab fa-aws cert-icon"></i>
-                    <div class="cert-name">AWS Certified Solutions Architect</div>
-                    <div class="cert-issuer">Amazon Web Services • 2025</div>
+                <div class="project-card">
+                    <h3 class="project-title">
+                        AWS Solutions Architect Certification
+                    </h3>
+                    <p class="project-date">01/2025 - Present</p>
+                    <p>
+                        Pursuing AWS certifications to deepen cloud architecture
+                        expertise, with hands-on labs and personal projects
+                        focusing on high availability, disaster recovery, and
+                        cost optimization strategies relevant to enterprise SaaS
+                        platforms.
+                    </p>
                 </div>
+            </section>
+        </div>
 
-                <div class="cert-card">
-                    <i class="fab fa-swift cert-icon"></i>
-                    <div class="cert-name">Swift Programming for Mobile App Development</div>
-                    <div class="cert-issuer">Educative • 06/2024 - Present</div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Recent Projects -->
-        <section class="section projects-section">
-            <div class="section-header">
-                <div class="section-icon">
-                    <i class="fas fa-rocket"></i>
-                </div>
-                <h2>Recent Projects</h2>
-            </div>
-
-            <div class="project-card">
-                <h3 class="project-title">Cloud Infrastructure & DevOps Platform</h3>
-                <p class="project-date">01/2025 - Present</p>
-                <p>Built and deployed containerized web infrastructure on Oracle Cloud that updates without downtime using GitHub Actions. Set up monitoring with Prometheus and Grafana to track container, system, and application metrics. Used Podman containers and Tailscale VPN for secure access within private subnets. Cut deployment time from manual processes to automated 3-minute updates.</p>
-            </div>
-
-            <div class="project-card">
-                <h3 class="project-title">Personal Website & Portfolio</h3>
-                <p class="project-date">12/2024 - Present</p>
-                <p>Developed and launched peterhollmer.com as a professional portfolio showcasing technical leadership experience. Implemented responsive design, contact form integration, and performance optimization achieving sub-second load times.</p>
-            </div>
-
-            <div class="project-card">
-                <h3 class="project-title">AWS Solutions Architect Certification</h3>
-                <p class="project-date">01/2025 - Present</p>
-                <p>Pursuing AWS certifications to deepen cloud architecture expertise, with hands-on labs and personal projects focusing on high availability, disaster recovery, and cost optimization strategies relevant to enterprise SaaS platforms.</p>
-            </div>
-        </section>
-    </div>
-
-    <script>
-        // Add smooth scroll behavior
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
+        <script>
+            // Add smooth scroll behavior
+            document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+                anchor.addEventListener("click", function (e) {
+                    e.preventDefault();
+                    document
+                        .querySelector(this.getAttribute("href"))
+                        .scrollIntoView({
+                            behavior: "smooth",
+                        });
                 });
             });
-        });
 
-        // Add intersection observer for fade-in animations
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
+            // Add intersection observer for fade-in animations
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: "0px 0px -50px 0px",
+            };
 
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
-                }
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = "1";
+                        entry.target.style.transform = "translateY(0)";
+                    }
+                });
+            }, observerOptions);
+
+            // Observe all cards and sections
+            document
+                .querySelectorAll(
+                    ".experience-card, .skill-category, .cert-card, .project-card",
+                )
+                .forEach((el) => {
+                    el.style.opacity = "0";
+                    el.style.transform = "translateY(20px)";
+                    el.style.transition =
+                        "opacity 0.6s ease, transform 0.6s ease";
+                    observer.observe(el);
+                });
+
+            // Print optimization
+            window.addEventListener("beforeprint", () => {
+                document.body.classList.add("printing");
             });
-        }, observerOptions);
 
-        // Observe all cards and sections
-        document.querySelectorAll('.experience-card, .skill-category, .cert-card, .project-card').forEach(el => {
-            el.style.opacity = '0';
-            el.style.transform = 'translateY(20px)';
-            el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-            observer.observe(el);
-        });
-
-        // Print optimization
-        window.addEventListener('beforeprint', () => {
-            document.body.classList.add('printing');
-        });
-
-        window.addEventListener('afterprint', () => {
-            document.body.classList.remove('printing');
-        });
-    </script>
-</body>
+            window.addEventListener("afterprint", () => {
+                document.body.classList.remove("printing");
+            });
+        </script>
+    </body>
 </html>
