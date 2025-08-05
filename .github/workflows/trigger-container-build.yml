@@ -5,7 +5,7 @@ on:
     branches: [main]
     paths:
       # Only trigger on actual application changes
-      - 'src/**'
+      - "src/**"
       # Add other paths that affect the container
 
 jobs:
