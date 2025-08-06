@@ -21,7 +21,6 @@ jobs:
             {
               "app_repo": "${{ github.repository }}",
               "commit_sha": "${{ github.sha }}",
-              "commit_message": "${{ github.event.head_commit.message }}",
               "author": "${{ github.actor }}",
               "ref": "${{ github.ref }}",
               "tag_suffix": "app-${{ github.sha }}"
