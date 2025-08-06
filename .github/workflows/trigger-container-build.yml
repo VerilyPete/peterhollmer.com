@@ -6,7 +6,6 @@ on:
     paths:
       # Only trigger on actual application changes
       - "src/**"
-      # Add other paths that affect the container
 
 jobs:
   trigger-build:
