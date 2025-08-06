@@ -6,6 +6,7 @@ on:
     paths:
       # Only trigger on actual application changes
       - "src/**"
+      - ".github/workflows/trigger-container-build.yml"
 
 jobs:
   trigger-build:
