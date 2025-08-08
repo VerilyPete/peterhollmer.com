@@ -62,6 +62,7 @@ build/
 reports/test-results/
 reports/playwright-report/
 tests/playwright/.cache/
+tests/test-results/
 
 # Coverage reports
 reports/coverage/

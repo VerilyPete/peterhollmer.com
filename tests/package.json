@@ -12,8 +12,18 @@
     "test:accessibility": "node --experimental-vm-modules node_modules/.bin/jest --testPathPatterns=accessibility --coverage --coverageReporters=json --coverageReporters=html",
     "test:performance": "node --experimental-vm-modules node_modules/.bin/jest --testPathPatterns=performance --coverage --coverageReporters=json --coverageReporters=html",
     "test:cross-browser": "playwright test",
+    "test:e2e": "playwright test",
+    "test:e2e:homepage": "playwright test homepage.spec.js",
+    "test:e2e:resume": "playwright test resume.spec.js",
+    "test:e2e:error-pages": "playwright test error-pages.spec.js",
+    "test:e2e:navigation": "playwright test navigation.spec.js",
+    "test:e2e:accessibility": "playwright test accessibility.spec.js",
+    "test:e2e:basic": "playwright test basic-functionality.spec.js",
+    "test:e2e:headed": "playwright test --headed",
+    "test:e2e:debug": "playwright test --debug",
     "test:all": "npm run test:html && npm run test:css && npm run test && npm run test:cross-browser",
     "test:all:ci": "npm run test:html && npm run test:css:ci && npm run test && npm run test:cross-browser",
+    "test:comprehensive": "npm run test:html && npm run test:css && npm run test:e2e",
     "install-browsers": "playwright install"
   },
   "devDependencies": {
