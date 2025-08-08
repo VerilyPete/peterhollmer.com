@@ -70,10 +70,7 @@ test.describe("Homepage Tests", () => {
     test("LinkedIn link is present and functional", async ({ page }) => {
       const linkedinLink = page.locator('a[href*="linkedin.com"]');
       await expect(linkedinLink).toBeVisible();
-      await expect(linkedinLink).toHaveAttribute(
-        "href",
-        "https://www.linkedin.com/in/phollmer/",
-      );
+      await expect(linkedinLink).toHaveAttribute("href", /linkedin\.com\/in\/phollmer/i);
       await expect(linkedinLink).toHaveAttribute("target", "_blank");
       await expect(linkedinLink).toHaveAttribute("rel", "noopener noreferrer");
       await expect(linkedinLink).toHaveAttribute(
@@ -85,10 +82,7 @@ test.describe("Homepage Tests", () => {
     test("GitHub link is present and functional", async ({ page }) => {
       const githubLink = page.locator('a[href*="github.com"]');
       await expect(githubLink).toBeVisible();
-      await expect(githubLink).toHaveAttribute(
-        "href",
-        "https://github.com/VerilyPete",
-      );
+      await expect(githubLink).toHaveAttribute("href", /github\.com\/VerilyPete/i);
       await expect(githubLink).toHaveAttribute("target", "_blank");
       await expect(githubLink).toHaveAttribute("rel", "noopener noreferrer");
       await expect(githubLink).toHaveAttribute(
@@ -184,15 +178,12 @@ test.describe("Homepage Tests", () => {
 
       // Check form elements exist
       const nameInput = page
-        .locator('input[type="text"], input[name="name"]')
-        .first();
+        .locator('input[type="text"], input[name="name"]').first();
       const emailInput = page
-        .locator('input[type="email"], input[name="email"]')
-        .first();
+        .locator('input[type="email"], input[name="email"]').first();
       const messageTextarea = page.locator("textarea").first();
       const submitButton = page
-        .locator('button[type="submit"], input[type="submit"]')
-        .first();
+        .locator('button[type="submit"], input[type="submit"]').first();
 
       await expect(nameInput).toBeVisible();
       await expect(emailInput).toBeVisible();

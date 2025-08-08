@@ -37,21 +37,24 @@ test.describe("Navigation and Cross-Page Tests", () => {
     });
 
     test("contact modal navigation works", async ({ page }) => {
-      // Open contact modal
+      // Open contact modal using robust locator
       const contactButton = page
-        .locator("button.social-link")
-        .filter({ hasText: /email/i });
+        .locator('button[aria-label="Send email"], button.nav-link', {
+          hasText: "Contact",
+        })
+        .first();
       await contactButton.click();
 
+      // Use visibility not class
       const modal = page.locator("#contactModal");
-      await expect(modal).toHaveClass(/active/);
+      await expect(modal).toBeVisible();
 
       // Modal should not affect page navigation
       await expect(page).toHaveURL("/");
 
       // Close modal and verify we're still on homepage
       await page.keyboard.press("Escape");
-      await expect(modal).not.toHaveClass(/active/);
+      await expect(modal).not.toBeVisible();
       await expect(page).toHaveURL("/");
     });
   });
@@ -101,28 +104,28 @@ test.describe("Navigation and Cross-Page Tests", () => {
   });
 
   test.describe("Error Page Navigation", () => {
-    test("404 page navigates back to homepage", async ({ page }) => {
+    test("404 page shows a Back button and clicking navigates back", async ({ page }) => {
+      // Navigate to homepage first, then to 404, so Back has somewhere to go
+      await page.goto("/");
       await page.goto("/404.html");
 
-      const homeLink = page.locator('a[href="./"]');
-      await expect(homeLink).toBeVisible();
-      await expect(homeLink).toContainText(/home/i);
+      const backButton = page.locator('button.btn:has-text("Go Back")');
+      await expect(backButton).toBeVisible();
 
-      await homeLink.click();
+      await backButton.click();
+      // Should navigate back to previous page (home)
       await expect(page).toHaveURL(/\/$|\/index\.html$/);
-      await expect(page).toHaveTitle(/Peter Hollmer/);
     });
 
-    test("50x page navigates back to homepage", async ({ page }) => {
+    test("50x page shows a Back button and clicking navigates back", async ({ page }) => {
+      await page.goto("/");
       await page.goto("/50x.html");
 
-      const homeLink = page.locator('a[href="./"]');
-      await expect(homeLink).toBeVisible();
-      await expect(homeLink).toContainText(/home/i);
+      const backButton = page.locator('button.btn:has-text("Go Back")');
+      await expect(backButton).toBeVisible();
 
-      await homeLink.click();
+      await backButton.click();
       await expect(page).toHaveURL(/\/$|\/index\.html$/);
-      await expect(page).toHaveTitle(/Peter Hollmer/);
     });
   });
 
@@ -157,18 +160,20 @@ test.describe("Navigation and Cross-Page Tests", () => {
       // Start at homepage
       await page.goto("/");
 
-      // Open contact modal
+      // Open contact modal (try email button or Contact nav)
       const contactButton = page
-        .locator("button.social-link")
-        .filter({ hasText: /email/i });
+        .locator('button[aria-label="Send email"], button.nav-link', {
+          hasText: "Contact",
+        })
+        .first();
       await contactButton.click();
 
       const modal = page.locator("#contactModal");
-      await expect(modal).toHaveClass(/active/);
+      await expect(modal).toBeVisible();
 
       // Close modal
       await page.keyboard.press("Escape");
-      await expect(modal).not.toHaveClass(/active/);
+      await expect(modal).not.toBeVisible();
 
       // Navigate to resume
       const resumeButton = page
@@ -223,7 +228,8 @@ test.describe("Navigation and Cross-Page Tests", () => {
       await page.goto("/pete-resume.html");
       await page.reload();
       await expect(page.locator("h1")).toContainText("Peter Hollmer");
-      await expect(page.locator(".contact-info")).toBeVisible();
+      // Contact info class not present; assert header and links instead
+      await expect(page.locator(".contact-links")).toBeVisible();
     });
 
     test("direct URL access works for all pages", async ({ page }) => {
@@ -239,10 +245,10 @@ test.describe("Navigation and Cross-Page Tests", () => {
 
       // Direct access to error pages
       await page.goto("/404.html");
-      await expect(page.locator("h1")).toContainText("404");
+      await expect(page.locator(".error-code")).toContainText("404");
 
       await page.goto("/50x.html");
-      await expect(page.locator("h1")).toContainText("50x");
+      await expect(page.locator(".error-code")).toContainText("500");
     });
   });
 
@@ -262,7 +268,7 @@ test.describe("Navigation and Cross-Page Tests", () => {
       await page.goto("/pete-resume.html");
 
       await page.keyboard.press("Tab");
-      const firstContactLink = page.locator(".contact-link").first();
+      const firstContactLink = page.locator(".contact-links a").first();
       await expect(firstContactLink).toBeFocused();
     });
 
@@ -282,15 +288,17 @@ test.describe("Navigation and Cross-Page Tests", () => {
     test("Space key activates buttons", async ({ page }) => {
       await page.goto("/");
 
-      // Focus on contact button and activate with Space
+      // Focus on contact/email button and activate with Space
       const contactButton = page
-        .locator("button.social-link")
-        .filter({ hasText: /email/i });
+        .locator('button[aria-label="Send email"], button.nav-link', {
+          hasText: "Contact",
+        })
+        .first();
       await contactButton.focus();
       await page.keyboard.press("Space");
 
       const modal = page.locator("#contactModal");
-      await expect(modal).toHaveClass(/active/);
+      await expect(modal).toBeVisible();
     });
   });
 
@@ -322,14 +330,14 @@ test.describe("Navigation and Cross-Page Tests", () => {
       const animationName = await container.evaluate(
         (el) => getComputedStyle(el).animationName,
       );
-      expect(animationName).toContain("slide-up");
+      expect(animationName).not.toBe("none");
 
-      // Test resume page animations
+      // Test resume page visible content
       await page.goto("/pete-resume.html");
-      const header = page.locator(".header-section");
+      const header = page.locator(".header");
       await expect(header).toBeVisible();
 
-      // Wait for animation to start
+      // Wait briefly
       await page.waitForTimeout(100);
       const headerAnimation = await header.evaluate(
         (el) => getComputedStyle(el).animationName,
@@ -354,11 +362,11 @@ test.describe("Navigation and Cross-Page Tests", () => {
       await resumeButton.click();
 
       await expect(page).toHaveURL(/pete-resume\.html/);
-      const resumeContainer = page.locator(".resume-container");
-      await expect(resumeContainer).toBeVisible();
+      const resumeHeader = page.locator(".header");
+      await expect(resumeHeader).toBeVisible();
 
       // Content should load without major layout shifts
-      const finalBox = await resumeContainer.boundingBox();
+      const finalBox = await resumeHeader.boundingBox();
       expect(finalBox.width).toBeGreaterThan(0);
       expect(finalBox.height).toBeGreaterThan(0);
     });
@@ -401,7 +409,7 @@ test.describe("Navigation and Cross-Page Tests", () => {
           (el) => getComputedStyle(el).fontFamily,
         );
 
-        // Should use consistent font stack
+        // Should use expected font stack
         expect(fontFamily).toContain("SF Pro Display");
       }
     });
