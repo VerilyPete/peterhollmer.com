@@ -6,7 +6,7 @@ test.describe("Resume Page Tests", () => {
   });
 
   test.describe("Basic Page Structure", () => {
-    test("loads the resume page successfully", async ({ page }) => {
+    test("[smoke] loads the resume page successfully", async ({ page }) => {
       await expect(page).toHaveTitle(/Peter Hollmer/);
 
       // Check main content is visible using semantic structure

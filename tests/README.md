@@ -78,6 +78,28 @@ npm run test:performance
 npm run test:cross-browser
 ```
 
+### E2E Run Modes
+
+- Slim (default, Chromium only):
+```bash
+npm run test:e2e:slim
+```
+
+- Smoke across full browser/device matrix:
+```bash
+npm run test:e2e:smoke
+```
+
+- Full matrix (all projects):
+```bash
+npm run test:e2e:full
+```
+
+Or toggle via environment:
+```bash
+FULL_E2E=1 npm run test:e2e
+```
+
 ### Watch Mode (for development)
 ```bash
 npm run test:watch
@@ -110,7 +132,7 @@ Located in `package.json`:
 
 ### Playwright Configuration
 Located in `playwright.config.js`:
-- Tests Chrome, Firefox, Safari, and mobile browsers
+- Slim by default (Chromium only). Set `FULL_E2E=1` to enable Firefox, WebKit, and mobile projects.
 - Screenshots and videos on failure
 - Local server setup for testing
 
