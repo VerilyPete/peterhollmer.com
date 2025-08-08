@@ -1,174 +1,170 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from "@playwright/test";
 
-test.describe('Cross-Browser Functionality', () => {
-  test('loads the main page successfully', async ({ page }) => {
-    await page.goto('/');
-    
+test.describe("Basic Functionality (Legacy Tests)", () => {
+  test("loads the main page successfully", async ({ page }) => {
+    await page.goto("/");
+
     // Check page title
-    await expect(page).toHaveTitle(/Peter Hollmer/);
-    
+    await expect(page).toHaveTitle(
+      /Peter Hollmer - Transforming Teams & Delivering Results/,
+    );
+
     // Check main content is visible - be specific about the home page
-    await expect(page.locator('#home-page h1')).toContainText('Peter Hollmer');
-    await expect(page.locator('#home-page .subtitle')).toBeVisible();
-    await expect(page.locator('#home-page .description')).toBeVisible();
+    await expect(page.locator("#home-page h1")).toContainText("Peter Hollmer");
+    await expect(page.locator("#home-page .subtitle")).toBeVisible();
+    await expect(page.locator("#home-page .description")).toBeVisible();
   });
 
-  test('displays profile image correctly', async ({ page }) => {
-    await page.goto('/');
-    
-    const profileImage = page.locator('.profile-image img');
-    await expect(profileImage).toBeVisible();
-    
-    // Check image has alt text
-    await expect(profileImage).toHaveAttribute('alt', 'Peter Hollmer');
+  test("new navigation features work", async ({ page }) => {
+    await page.goto("/");
+
+    // Test resume button navigation
+    const resumeButton = page
+      .locator("button.nav-link")
+      .filter({ hasText: "Resume" });
+    await expect(resumeButton).toBeVisible();
+    await resumeButton.click();
+    await expect(page).toHaveURL(/pete-resume\.html/);
   });
 
-  test('contact modal opens and closes', async ({ page }) => {
-    await page.goto('/');
-    
-    // Click contact button
-    const contactButton = page.locator('.social-link').first();
-    await contactButton.click();
-    
-    // Check modal is visible
-    const modal = page.locator('#contactModal');
-    await expect(modal).toHaveClass(/active/);
-    
-    // Close modal
-    const closeButton = page.locator('.close-btn');
-    await closeButton.click();
-    
-    // Check modal is hidden
-    await expect(modal).not.toHaveClass(/active/);
-  });
+  test("new social links are functional", async ({ page }) => {
+    await page.goto("/");
 
-  test('contact form validation works', async ({ page }) => {
-    await page.goto('/');
-    
-    // Open modal
-    const contactButton = page.locator('.social-link').first();
-    await contactButton.click();
-    
-    // Try to submit empty form
-    const submitButton = page.locator('.submit-btn');
-    await submitButton.click();
-    
-    // Form should not submit (validation prevents it)
-    // Check that we're still on the same page
-    await expect(page).toHaveTitle(/Peter Hollmer/);
-  });
+    // Check GitHub link (new addition)
+    const githubLink = page.locator('a[href*="github.com"]');
+    await expect(githubLink).toBeVisible();
+    await expect(githubLink).toHaveAttribute(
+      "href",
+      "https://github.com/VerilyPete",
+    );
+    await expect(githubLink).toHaveAttribute("target", "_blank");
 
-  test('social links are accessible', async ({ page }) => {
-    await page.goto('/');
-    
     // Check LinkedIn link
     const linkedinLink = page.locator('a[href*="linkedin.com"]');
     await expect(linkedinLink).toBeVisible();
-    await expect(linkedinLink).toHaveAttribute('href', 'https://www.linkedin.com/in/phollmer/');
+    await expect(linkedinLink).toHaveAttribute(
+      "href",
+      "https://www.linkedin.com/in/phollmer/",
+    );
+    await expect(linkedinLink).toHaveAttribute("target", "_blank");
   });
 
-  test('responsive design works on mobile', async ({ page }) => {
-    // Set mobile viewport
-    await page.setViewportSize({ width: 375, height: 667 });
-    await page.goto('/');
-    
-    // Check content is still visible - be specific about the home page
-    await expect(page.locator('#home-page h1')).toBeVisible();
-    await expect(page.locator('#home-page .subtitle')).toBeVisible();
-    await expect(page.locator('#home-page .description')).toBeVisible();
-    
-    // Check social links are accessible
-    const socialLinks = page.locator('.social-links');
-    await expect(socialLinks).toBeVisible();
-  });
+  test("floating shapes animations are present", async ({ page }) => {
+    await page.goto("/");
 
-  test('animations are present', async ({ page }) => {
-    await page.goto('/');
-    
-    // Check for animated elements
-    const floatingShapes = page.locator('.floating-shapes');
+    // Check for new floating shapes animation
+    const floatingShapes = page.locator(".floating-shapes");
     await expect(floatingShapes).toBeVisible();
-    
-    const statusDot = page.locator('.status-dot');
-    await expect(statusDot).toBeVisible();
+
+    const shapes = page.locator(".shape");
+    await expect(shapes).toHaveCount(4);
+
+    // Verify shapes have float animation
+    for (let i = 0; i < 4; i++) {
+      const shape = shapes.nth(i);
+      const animationName = await shape.evaluate(
+        (el) => getComputedStyle(el).animationName,
+      );
+      expect(animationName).toContain("float-shape");
+    }
   });
 
-  test('footer is displayed', async ({ page }) => {
-    await page.goto('/');
-    
-    const footer = page.locator('.footer');
-    await expect(footer).toBeVisible();
-    await expect(footer).toContainText('© 2025 Peter Hollmer');
-  });
+  test("contact modal with updated styling works", async ({ page }) => {
+    await page.goto("/");
 
-  test('keyboard navigation works', async ({ page }) => {
-    await page.goto('/');
-    
-    // Open modal
-    const contactButton = page.locator('.social-link').first();
+    // Click contact button (updated selector for new layout)
+    const contactButton = page
+      .locator("button.social-link")
+      .filter({ hasText: /email/i });
     await contactButton.click();
-    
-    // Press Escape to close modal
-    await page.keyboard.press('Escape');
-    
-    const modal = page.locator('#contactModal');
+
+    // Check modal is visible
+    const modal = page.locator("#contactModal");
+    await expect(modal).toHaveClass(/active/);
+
+    // Close modal with Escape key
+    await page.keyboard.press("Escape");
     await expect(modal).not.toHaveClass(/active/);
   });
 
-  test('page loads without JavaScript errors', async ({ page }) => {
+  test("cross-page navigation integration", async ({ page }) => {
+    await page.goto("/");
+
+    // Navigate to resume and back
+    const resumeButton = page
+      .locator("button.nav-link")
+      .filter({ hasText: "Resume" });
+    await resumeButton.click();
+    await expect(page).toHaveURL(/pete-resume\.html/);
+
+    // Navigate back to homepage
+    const websiteLink = page.locator('a[href="./"]');
+    await websiteLink.click();
+    await expect(page).toHaveURL(/\/$|\/index\.html$/);
+  });
+
+  test("error pages are accessible", async ({ page }) => {
+    // Test 404 page
+    await page.goto("/404.html");
+    await expect(page.locator("h1")).toContainText("404");
+
+    const homeLink404 = page.locator('a[href="./"]');
+    await homeLink404.click();
+    await expect(page).toHaveURL(/\/$|\/index\.html$/);
+
+    // Test 50x page
+    await page.goto("/50x.html");
+    await expect(page.locator("h1")).toContainText("50x");
+
+    const homeLink50x = page.locator('a[href="./"]');
+    await homeLink50x.click();
+    await expect(page).toHaveURL(/\/$|\/index\.html$/);
+  });
+
+  test("comprehensive animation system works", async ({ page }) => {
+    await page.goto("/");
+
+    // Test container slide-up animation
+    const container = page.locator("#home-page .container");
+    await expect(container).toBeVisible();
+    const containerAnimation = await container.evaluate(
+      (el) => getComputedStyle(el).animationName,
+    );
+    expect(containerAnimation).toContain("slide-up");
+
+    // Test profile image pulse animation
+    const profileImage = page.locator(".profile-image");
+    const profileAnimation = await profileImage.evaluate(
+      (el) => getComputedStyle(el).animationName,
+    );
+    expect(profileAnimation).toContain("pulse");
+
+    // Test status dot blink animation
+    const statusDot = page.locator(".status-dot");
+    await expect(statusDot).toBeVisible();
+    const statusAnimation = await statusDot.evaluate(
+      (el) => getComputedStyle(el).animationName,
+    );
+    expect(statusAnimation).toContain("blink");
+  });
+
+  test("all pages load without errors", async ({ page }) => {
     const errors = [];
-    
-    page.on('console', msg => {
-      if (msg.type() === 'error') {
+
+    page.on("console", (msg) => {
+      if (msg.type() === "error") {
         errors.push(msg.text());
       }
     });
-    
-    await page.goto('/');
-    
-    // Wait a bit for any async operations
-    await page.waitForTimeout(1000);
-    
+
+    // Test all pages
+    const pages = ["/", "/pete-resume.html", "/404.html", "/50x.html"];
+
+    for (const pageUrl of pages) {
+      await page.goto(pageUrl);
+      await page.waitForTimeout(500);
+    }
+
     expect(errors).toEqual([]);
   });
-
-  test('images load correctly', async ({ page }) => {
-    await page.goto('/');
-    
-    // Check profile image loads
-    const profileImage = page.locator('.profile-image img');
-    await expect(profileImage).toBeVisible();
-    
-    // Wait for image to load
-    await profileImage.waitFor({ state: 'visible' });
-    
-    // Check image dimensions are reasonable
-    const imageBox = await profileImage.boundingBox();
-    expect(imageBox.width).toBeGreaterThan(0);
-    expect(imageBox.height).toBeGreaterThan(0);
-  });
-
-  test('CSS animations are working', async ({ page }) => {
-    await page.goto('/');
-    
-    // Check for animated elements - be specific about the home page container
-    const container = page.locator('#home-page .container');
-    await expect(container).toBeVisible();
-    
-    // Wait for animations to start
-    await page.waitForTimeout(100);
-    
-    // Check that container has reasonable dimensions (better than coordinate checks)
-    const containerBox = await container.boundingBox();
-    expect(containerBox.width).toBeGreaterThan(0);
-    expect(containerBox.height).toBeGreaterThan(0);
-    
-    // Check for animated elements that should be present
-    const statusDot = page.locator('.status-dot');
-    await expect(statusDot).toBeVisible();
-    
-    // Verify some animation is applied (more flexible than checking specific names)
-    const animation = await container.evaluate(el => getComputedStyle(el).animationName);
-    expect(animation).not.toBe('none');
-  });
-}); 
+});
