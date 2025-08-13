@@ -191,6 +191,37 @@ npm run test:e2e:debug             # Run in debug mode
 npm run test:comprehensive         # HTML validation + CSS + E2E tests
 ```
 
+### Run Modes and Reports
+
+- Slim E2E (Chromium only):
+```bash
+npm run test:e2e:slim
+```
+
+- Smoke across full browser/device matrix:
+```bash
+npm run test:e2e:smoke
+```
+
+- Full matrix E2E:
+```bash
+npm run test:e2e:full
+```
+
+- Toggle full matrix for any E2E command:
+```bash
+FULL_E2E=1 npm run test:e2e
+```
+
+- View reports:
+```bash
+# Jest coverage (generated to ../reports/coverage)
+open ../reports/coverage/index.html
+
+# Playwright report (generated to ../reports/playwright-report)
+npx playwright show-report ../reports/playwright-report
+```
+
 ### Browser Coverage
 
 Tests run across multiple browsers and devices:
@@ -309,5 +340,5 @@ Use `npm run test:e2e:debug` to:
 
 ---
 
-*Last updated: 2025-01-27*
+*Last updated: 2025-08-11*
 *Total test execution time: ~5-8 minutes for full suite*

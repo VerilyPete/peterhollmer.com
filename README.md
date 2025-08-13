@@ -48,6 +48,11 @@ npm run test:all
 
 Tests generate coverage reports in the `reports/coverage/` directory.
 
+View reports locally:
+
+- Coverage (Jest): `open reports/coverage/index.html`
+- Playwright report: `npx playwright show-report reports/playwright-report`
+
 ## CI/CD
 
 The project uses GitHub Actions for continuous integration. The workflow runs:
@@ -68,7 +73,3 @@ All test results and reports are uploaded as artifacts.
 - **Testing**: Jest, Playwright, axe-core
 - **Validation**: html-validate, stylelint
 - **CI/CD**: GitHub Actions
-
-## Deployment
-
-The `src/` directory contains the deployable website files. Deploy the contents of `src/` to your web server or hosting platform. 
