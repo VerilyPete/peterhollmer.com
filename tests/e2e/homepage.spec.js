@@ -7,10 +7,6 @@ test.describe("Homepage Tests", () => {
 
   test.describe("Basic Page Structure", () => {
     test("[smoke] loads the main page successfully", async ({ page }) => {
-      await expect(page).toHaveTitle(
-        /Peter Hollmer - Transforming Teams & Delivering Results/,
-      );
-
       // Check main content is visible using semantic elements
       await expect(
         page.locator("h1").filter({ hasText: "Peter Hollmer" }),

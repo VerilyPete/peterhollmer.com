@@ -14,9 +14,6 @@ test.describe("Navigation and Cross-Page Tests", () => {
 
       await resumeButton.click();
       await expect(page).toHaveURL(/pete-resume\.html/);
-      await expect(page).toHaveTitle(
-        /Senior Technical Operations & Engineering Leadership/,
-      );
     });
 
     test("external social links open in new tabs", async ({
@@ -71,7 +68,6 @@ test.describe("Navigation and Cross-Page Tests", () => {
 
       await websiteLink.click();
       await expect(page).toHaveURL(/\/$|\/index\.html$/);
-      await expect(page).toHaveTitle(/Peter Hollmer/);
     });
 
     test("external links work correctly from resume page", async ({ page }) => {

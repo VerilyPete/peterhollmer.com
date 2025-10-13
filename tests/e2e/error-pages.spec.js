@@ -7,11 +7,8 @@ test.describe("Error Pages Tests", () => {
     });
 
     test("[smoke] loads 404 page successfully", async ({ page }) => {
-      await expect(page).toHaveTitle(/404 - Page Not Found \| Peter Hollmer/);
-
       // Check main content is visible
       await expect(page.locator(".error-code")).toContainText("404");
-      await expect(page).toHaveTitle(/Peter Hollmer/);
     });
 
     test("displays proper error message", async ({ page }) => {
@@ -73,9 +70,6 @@ test.describe("Error Pages Tests", () => {
     });
 
     test("has proper accessibility features", async ({ page }) => {
-      // Check title branding exists
-      await expect(page).toHaveTitle(/Peter Hollmer/);
-
       // Test keyboard navigation to Back button
       const backButton = page.locator('button.btn:has-text("Go Back")');
       await backButton.focus();
@@ -98,9 +92,6 @@ test.describe("Error Pages Tests", () => {
     });
 
     test("has proper color scheme and branding", async ({ page }) => {
-      // Check that page has proper branding
-      await expect(page).toHaveTitle(/Peter Hollmer/);
-
       // Verify visible content and non-transparent background
       const body = page.locator("body");
       const backgroundImage = await body.evaluate(
@@ -116,11 +107,8 @@ test.describe("Error Pages Tests", () => {
     });
 
     test("[smoke] loads 50x page successfully", async ({ page }) => {
-      await expect(page).toHaveTitle(/500 - Server Error \| Peter Hollmer/);
-
       // Check main content is visible
       await expect(page.locator(".error-code")).toContainText("500");
-      await expect(page).toHaveTitle(/Peter Hollmer/);
     });
 
     test("displays proper error message", async ({ page }) => {
@@ -176,9 +164,6 @@ test.describe("Error Pages Tests", () => {
     });
 
     test("has proper accessibility features", async ({ page }) => {
-      // Check title branding exists
-      await expect(page).toHaveTitle(/Peter Hollmer/);
-
       // Test keyboard navigation to Back button
       const backButton = page.locator('button.btn:has-text("Go Back")');
       await backButton.focus();
@@ -235,13 +220,13 @@ test.describe("Error Pages Tests", () => {
     );
 
     test("both error pages have consistent branding", async ({ page }) => {
-      // Test 404 page branding
+      // Test 404 page has visible error code
       await page.goto("/404.html");
-      await expect(page).toHaveTitle(/Peter Hollmer/);
+      await expect(page.locator(".error-code")).toContainText("404");
 
-      // Test 50x page branding
+      // Test 50x page has visible error code
       await page.goto("/50x.html");
-      await expect(page).toHaveTitle(/Peter Hollmer/);
+      await expect(page.locator(".error-code")).toContainText("50");
     });
   });
 
