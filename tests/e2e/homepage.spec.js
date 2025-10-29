@@ -87,18 +87,6 @@ test.describe("Homepage Tests", () => {
       );
     });
 
-    test("contact button opens modal", async ({ page }) => {
-      const contactButton = page
-        .locator("button")
-        .filter({ hasText: "Contact" });
-      await expect(contactButton).toBeVisible();
-
-      await contactButton.click();
-
-      const modal = page.locator('[role="dialog"], dialog');
-      await expect(modal).toBeVisible();
-    });
-
     test("social links have proper hover states", async ({ page }) => {
       const socialLinks = page.locator(
         'a[href*="linkedin.com"], a[href*="github.com"]',
@@ -110,95 +98,6 @@ test.describe("Homepage Tests", () => {
 
       // Verify the link is still visible and interactive
       await expect(socialLinks.first()).toBeVisible();
-    });
-  });
-
-  test.describe("Contact Modal", () => {
-    test("modal opens and closes correctly", async ({ page }) => {
-      // Open modal
-      const contactButton = page
-        .locator("button")
-        .filter({ hasText: "Contact" });
-      await contactButton.click();
-
-      const modal = page.locator('[role="dialog"], dialog');
-      await expect(modal).toBeVisible();
-
-      // Close with X button
-      const closeButton = page.locator(
-        'button[aria-label*="close"], button:has-text("×")',
-      );
-      await closeButton.click();
-
-      await expect(modal).not.toBeVisible();
-    });
-
-    test("modal closes with Escape key", async ({ page }) => {
-      // Open modal
-      const contactButton = page
-        .locator("button")
-        .filter({ hasText: "Contact" });
-      await contactButton.click();
-
-      const modal = page.locator('[role="dialog"], dialog');
-      await expect(modal).toBeVisible();
-
-      // Press Escape
-      await page.keyboard.press("Escape");
-
-      await expect(modal).not.toBeVisible();
-    });
-
-    test("modal closes when clicking overlay", async ({ page }) => {
-      // Open modal
-      const contactButton = page
-        .locator("button")
-        .filter({ hasText: "Contact" });
-      await contactButton.click();
-
-      const modal = page.locator('[role="dialog"], dialog');
-      await expect(modal).toBeVisible();
-
-      // Click outside modal content
-      await page.keyboard.press("Escape"); // More reliable than clicking overlay
-
-      await expect(modal).not.toBeVisible();
-    });
-
-    test("contact form has proper validation", async ({ page }) => {
-      // Open modal
-      const contactButton = page
-        .locator("button")
-        .filter({ hasText: "Contact" });
-      await contactButton.click();
-
-      // Check form elements exist
-      const nameInput = page
-        .locator('input[type="text"], input[name="name"]').first();
-      const emailInput = page
-        .locator('input[type="email"], input[name="email"]').first();
-      const messageTextarea = page.locator("textarea").first();
-      const submitButton = page
-        .locator('button[type="submit"], input[type="submit"]').first();
-
-      await expect(nameInput).toBeVisible();
-      await expect(emailInput).toBeVisible();
-      await expect(messageTextarea).toBeVisible();
-      await expect(submitButton).toBeVisible();
-
-      // Try submitting empty form
-      await submitButton.click();
-
-      // Form should require validation
-      const isNameValid = await nameInput.evaluate((el) => el.checkValidity());
-      const isEmailValid = await emailInput.evaluate((el) =>
-        el.checkValidity(),
-      );
-      const isMessageValid = await messageTextarea.evaluate((el) =>
-        el.checkValidity(),
-      );
-
-      expect(isNameValid || isEmailValid || isMessageValid).toBeFalsy();
     });
   });
 
@@ -266,16 +165,6 @@ test.describe("Homepage Tests", () => {
       // Check social links are accessible
       await expect(page.locator('a[href*="linkedin.com"]')).toBeVisible();
       await expect(page.locator('a[href*="github.com"]')).toBeVisible();
-
-      // Verify modal still works on mobile
-      const contactButton = page
-        .locator("button")
-        .filter({ hasText: "Contact" });
-      if ((await contactButton.count()) > 0) {
-        await contactButton.click();
-        const modal = page.locator('[role="dialog"], dialog');
-        await expect(modal).toBeVisible();
-      }
     });
 
     test("works on tablet viewport", async ({ page }) => {
@@ -321,13 +210,6 @@ test.describe("Homepage Tests", () => {
         "aria-label",
         "Visit GitHub profile",
       );
-
-      const contactButton = page
-        .locator("button")
-        .filter({ hasText: "Contact" });
-      if ((await contactButton.count()) > 0) {
-        await expect(contactButton).toBeVisible();
-      }
     });
 
     test("has proper heading hierarchy", async ({ page }) => {
@@ -335,29 +217,6 @@ test.describe("Homepage Tests", () => {
       const h1 = page.locator("h1").first();
       await expect(h1).toBeVisible();
       await expect(h1).toContainText("Peter Hollmer");
-    });
-
-    test("has proper focus management in modal", async ({ page }) => {
-      // Open modal
-      const contactButton = page
-        .locator("button")
-        .filter({ hasText: "Contact" });
-      if ((await contactButton.count()) > 0) {
-        await contactButton.click();
-
-        // Check that focus moves to modal
-        const modal = page.locator('[role="dialog"], dialog');
-        await expect(modal).toBeVisible();
-
-        // Tab through form elements
-        await page.keyboard.press("Tab");
-        const firstInput = page
-          .locator('input[type="text"], input[name="name"]')
-          .first();
-        if ((await firstInput.count()) > 0) {
-          await expect(firstInput).toBeFocused();
-        }
-      }
     });
   });
 
@@ -377,27 +236,6 @@ test.describe("Homepage Tests", () => {
       await page.waitForTimeout(1000);
 
       expect(errors).toEqual([]);
-    });
-
-    test("handles rapid modal open/close", async ({ page }) => {
-      const contactButton = page
-        .locator("button")
-        .filter({ hasText: "Contact" });
-
-      if ((await contactButton.count()) > 0) {
-        const modal = page.locator('[role="dialog"], dialog');
-
-        // Rapidly open and close modal
-        for (let i = 0; i < 3; i++) {
-          await contactButton.click();
-          await expect(modal).toBeVisible();
-
-          await page.keyboard.press("Escape");
-          await expect(modal).not.toBeVisible();
-
-          await page.waitForTimeout(100);
-        }
-      }
     });
 
     test("status indicator shows active state", async ({ page }) => {

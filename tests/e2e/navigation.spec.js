@@ -32,28 +32,6 @@ test.describe("Navigation and Cross-Page Tests", () => {
       await expect(linkedinLink).toHaveAttribute("rel", "noopener noreferrer");
       await expect(githubLink).toHaveAttribute("rel", "noopener noreferrer");
     });
-
-    test("contact modal navigation works", async ({ page }) => {
-      // Open contact modal using robust locator
-      const contactButton = page
-        .locator('button[aria-label="Send email"], button.nav-link', {
-          hasText: "Contact",
-        })
-        .first();
-      await contactButton.click();
-
-      // Use visibility not class
-      const modal = page.locator("#contactModal");
-      await expect(modal).toBeVisible();
-
-      // Modal should not affect page navigation
-      await expect(page).toHaveURL("/");
-
-      // Close modal and verify we're still on homepage
-      await page.keyboard.press("Escape");
-      await expect(modal).not.toBeVisible();
-      await expect(page).toHaveURL("/");
-    });
   });
 
   test.describe("Resume Page Navigation", () => {
@@ -150,26 +128,11 @@ test.describe("Navigation and Cross-Page Tests", () => {
       );
     });
 
-    test("complete user journey: home → contact modal → resume → home", async ({
+    test("complete user journey: home → resume → home", async ({
       page,
     }) => {
       // Start at homepage
       await page.goto("/");
-
-      // Open contact modal (try email button or Contact nav)
-      const contactButton = page
-        .locator('button[aria-label="Send email"], button.nav-link', {
-          hasText: "Contact",
-        })
-        .first();
-      await contactButton.click();
-
-      const modal = page.locator("#contactModal");
-      await expect(modal).toBeVisible();
-
-      // Close modal
-      await page.keyboard.press("Escape");
-      await expect(modal).not.toBeVisible();
 
       // Navigate to resume
       const resumeButton = page
@@ -305,17 +268,16 @@ test.describe("Navigation and Cross-Page Tests", () => {
     test("Space key activates buttons", async ({ page }) => {
       await page.goto("/");
 
-      // Focus on contact/email button and activate with Space
-      const contactButton = page
-        .locator('button[aria-label="Send email"], button.nav-link', {
-          hasText: "Contact",
-        })
-        .first();
-      await contactButton.focus();
+      // Focus on About button and activate with Space
+      const aboutButton = page
+        .locator("button.nav-link")
+        .filter({ hasText: "About" });
+      await aboutButton.focus();
       await page.keyboard.press("Space");
 
-      const modal = page.locator("#contactModal");
-      await expect(modal).toBeVisible();
+      // About page should now be active
+      const aboutPage = page.locator("#about-page");
+      await expect(aboutPage).toBeVisible();
     });
   });
 

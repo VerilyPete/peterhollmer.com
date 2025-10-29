@@ -23,27 +23,6 @@ test.describe('Cross-Browser Functionality', () => {
     await expect(profileImage).toHaveAttribute('alt', 'Peter Hollmer');
   });
 
-  test('contact modal opens and closes', async ({ page }) => {
-    await page.goto('/');
-    
-    // Prefer robust locator: try the Contact nav button first, then fallback to email button
-    const contactNavButton = page.locator('button.nav-link').filter({ hasText: 'Contact' });
-    const emailButton = page.locator('button[aria-label="Send email"]');
-    const opener = (await contactNavButton.count()) > 0 ? contactNavButton : emailButton;
-    await opener.click();
-    
-    // Check modal is visible via visibility, not class
-    const modal = page.locator('#contactModal');
-    await expect(modal).toBeVisible();
-    
-    // Close modal
-    const closeButton = page.locator('.close-btn');
-    await closeButton.click();
-    
-    // Check modal is hidden via visibility
-    await expect(modal).not.toBeVisible();
-  });
-
   test('social links are accessible', async ({ page }) => {
     await page.goto('/');
     
@@ -90,17 +69,12 @@ test.describe('Cross-Browser Functionality', () => {
   test('keyboard navigation works', async ({ page }) => {
     await page.goto('/');
     
-    // Open modal via robust locator
-    const contactNavButton = page.locator('button.nav-link').filter({ hasText: 'Contact' });
-    const emailButton = page.locator('button[aria-label="Send email"]');
-    const opener = (await contactNavButton.count()) > 0 ? contactNavButton : emailButton;
-    await opener.click();
+    // Tab through navigation elements
+    await page.keyboard.press('Tab');
     
-    // Press Escape to close modal
-    await page.keyboard.press('Escape');
-    
-    const modal = page.locator('#contactModal');
-    await expect(modal).not.toBeVisible();
+    // Resume button should be focusable
+    const resumeButton = page.locator('button').filter({ hasText: 'Resume' });
+    await expect(resumeButton).toBeVisible();
   });
 
   test('page loads without JavaScript errors', async ({ page }) => {

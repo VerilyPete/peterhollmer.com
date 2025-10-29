@@ -238,14 +238,6 @@ The test suite runs automatically on every commit and pull request via GitHub Ac
 - ✅ Keyboard navigation
 - ✅ Error handling
 
-## 🔍 Mocked API Testing
-
-The test suite uses mocked Formspree API responses to test form functionality without consuming your monthly submission quota:
-
-- **Success Response** - Tests successful form submission UI
-- **Error Response** - Tests API error handling
-- **Network Error** - Tests network failure scenarios
-
 ## 📊 Performance Benchmarks
 
 The test suite includes performance benchmarks:
@@ -319,6 +311,4 @@ For issues with the test suite:
 3. Create an issue with detailed error information
 4. Include test output and environment details
 
----
-
-**Note**: This test suite is designed to run without consuming your Formspree API quota by using mocked responses for all form submission tests. 
+--- 

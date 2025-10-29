@@ -66,7 +66,7 @@ describe('HTML Validation', () => {
         const links = htmlContent.match(/<a[^>]*>.*?<\/a>/gi) || [];
         links.forEach(link => {
           // External links should have target="_blank" and rel="noopener noreferrer"
-          if (link.includes('http') && !link.includes('formspree.io')) {
+          if (link.includes('http')) {
             expect(link).toMatch(/target="_blank"/i);
             expect(link).toMatch(/rel="[^"]*noopener[^"]*"/i);
           }

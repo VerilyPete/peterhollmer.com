@@ -75,16 +75,6 @@ test.describe("Accessibility Tests", () => {
         "aria-label",
         "Visit GitHub profile",
       );
-
-      const contactButton = page.getByRole("button", { name: /send email/i });
-      await expect(contactButton).toHaveAttribute("aria-label", "Send email");
-
-      // Check modal accessibility
-      await contactButton.click();
-      const modal = page.locator("#contactModal");
-      await expect(modal).toBeVisible();
-      await expect(modal).toHaveAttribute("role", "dialog");
-      await expect(modal).toHaveAttribute("aria-modal", "true");
     });
 
     test("has proper alt text for images", async ({ page }) => {
@@ -95,39 +85,6 @@ test.describe("Accessibility Tests", () => {
       const altText = await profileImage.getAttribute("alt");
       expect(altText.length).toBeGreaterThan(0);
       expect(altText).not.toBe("image"); // Should be more descriptive
-    });
-
-    test("has proper form accessibility", async ({ page }) => {
-      // Open contact modal
-      const contactButton = page.getByRole("button", { name: /send email/i });
-      await contactButton.click();
-
-      // Check form labels
-      const nameInput = page.locator('input[name="name"]');
-      const emailInput = page.locator('input[name="email"]');
-      const messageTextarea = page.locator('textarea[name="message"]');
-
-      // Each input should have associated label or be visible
-      if ((await nameInput.count()) > 0) {
-        await expect(nameInput).toBeVisible();
-      }
-
-      if ((await emailInput.count()) > 0) {
-        await expect(emailInput).toBeVisible();
-      }
-
-      if ((await messageTextarea.count()) > 0) {
-        await expect(messageTextarea).toBeVisible();
-      }
-
-      // Check for required field indicators
-      const requiredFields = page.locator(
-        "input[required], textarea[required]",
-      );
-      for (let i = 0; i < (await requiredFields.count()); i++) {
-        const field = requiredFields.nth(i);
-        await expect(field).toHaveAttribute("required");
-      }
     });
 
     test("has proper color contrast", async ({ page }) => {
@@ -191,30 +148,6 @@ test.describe("Accessibility Tests", () => {
         outlineStyle !== "none" ||
         boxShadow !== "none";
       expect(hasFocusIndicator).toBeTruthy();
-    });
-
-    test("modal focus management works", async ({ page }) => {
-      // Open modal
-      const contactButton = page.getByRole("button", { name: /send email/i });
-
-      if ((await contactButton.count()) > 0) {
-        await contactButton.click();
-
-        // Focus should move into modal
-        const modal = page.locator('[role="dialog"], dialog');
-        await expect(modal).toBeVisible();
-
-        // First focusable element in modal should receive focus (best effort)
-        await page.waitForTimeout(100);
-        const focused = await page.evaluate(
-          () => document.activeElement.tagName,
-        );
-        expect(["INPUT", "BUTTON", "TEXTAREA"].includes(focused)).toBeTruthy();
-
-        // Escape should close modal
-        await page.keyboard.press("Escape");
-        await expect(modal).not.toBeVisible();
-      }
     });
   });
 

@@ -103,7 +103,7 @@ describe("Accessibility (a11y)", () => {
         }
 
         // External links should have proper attributes
-        if (href && href.startsWith("http") && !href.includes("formspree.io")) {
+        if (href && href.startsWith("http")) {
           expect(link.getAttribute("target")).toBe("_blank");
           expect(link.getAttribute("rel")).toContain("noopener");
         }

@@ -719,11 +719,6 @@
               Resume
             </button>
           </li>
-          <li>
-            <button type="button" class="nav-link" onclick="openContactModal()">
-              Contact
-            </button>
-          </li>
         </ul>
       </nav>
 
@@ -764,25 +759,6 @@
 
           <section class="social-section">
             <div class="social-links">
-              <button
-                type="button"
-                class="social-link"
-                onclick="openContactModal()"
-                title="Email"
-                aria-label="Send email"
-              >
-                <svg
-                  width="20"
-                  height="20"
-                  viewBox="0 0 24 24"
-                  fill="currentColor"
-                  aria-hidden="true"
-                >
-                  <path
-                    d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.89 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"
-                  />
-                </svg>
-              </button>
               <a
                 href="https://www.linkedin.com/in/phollmer/"
                 class="social-link"
@@ -908,88 +884,11 @@
           </div>
         </div>
       </section>
-
-      <!-- Contact Modal -->
-      <div
-        class="modal-overlay"
-        id="contactModal"
-        role="dialog"
-        aria-modal="true"
-        aria-labelledby="modal-title"
-      >
-        <div class="modal">
-          <div class="modal-header">
-            <h2 class="modal-title" id="modal-title">Get in Touch</h2>
-            <button
-              type="button"
-              class="close-btn"
-              onclick="closeContactModal()"
-              aria-label="Close modal"
-              aria-describedby="modal-title"
-            >
-              &times;
-            </button>
-          </div>
-
-          <form
-            id="contact-form"
-            class="contact-form"
-            action="/submit-form"
-            method="POST"
-          >
-            <div class="form-group">
-              <label for="name">Name</label>
-              <input
-                type="text"
-                id="name"
-                name="name"
-                required
-                aria-required="true"
-                placeholder="Your name"
-                class="form-input"
-              />
-            </div>
-
-            <div class="form-group">
-              <label for="email">Email</label>
-              <input
-                type="email"
-                id="email"
-                name="email"
-                required
-                aria-required="true"
-                placeholder="your@email.com"
-                class="form-input"
-              />
-            </div>
-
-            <div class="form-group">
-              <label for="message">Message</label>
-              <textarea
-                id="message"
-                name="message"
-                required
-                aria-required="true"
-                placeholder="What's on your mind?"
-                class="form-input"
-              ></textarea>
-            </div>
-
-            <button type="submit" class="submit-btn">Send Message</button>
-
-            <div id="form-message" class="form-message"></div>
-          </form>
-        </div>
-      </div>
     </div>
 
     <footer class="footer">© 2025 Peter Hollmer</footer>
 
     <script>
-      let modalCloseTimeout = null;
-      let modalEscapeHandler = null;
-      let modalClickHandler = null;
-
       // Page navigation
       function showPage(pageId) {
         // Hide all pages
@@ -1023,104 +922,8 @@
         }
       }
 
-      function openContactModal() {
-        const modal = document.getElementById("contactModal");
-        modal.classList.add("active");
-        document.body.style.overflow = "hidden";
-        // Focus the close button for accessibility
-        const closeBtn = modal.querySelector(".close-btn");
-        if (closeBtn) {
-          closeBtn.focus();
-        }
-        // Add event listeners
-        modalEscapeHandler = function (e) {
-          if (e.key === "Escape") {
-            closeContactModal();
-          }
-        };
-        modalClickHandler = function (e) {
-          if (e.target === modal) {
-            closeContactModal();
-          }
-        };
-        document.addEventListener("keydown", modalEscapeHandler);
-        modal.addEventListener("click", modalClickHandler);
-      }
-
-      function closeContactModal() {
-        const modal = document.getElementById("contactModal");
-        modal.classList.remove("active");
-        document.body.style.overflow = "";
-        // Remove event listeners
-        if (modalEscapeHandler) {
-          document.removeEventListener("keydown", modalEscapeHandler);
-          modalEscapeHandler = null;
-        }
-        if (modalClickHandler) {
-          modal.removeEventListener("click", modalClickHandler);
-          modalClickHandler = null;
-        }
-        // Clear modal close timeout if still pending
-        if (modalCloseTimeout) {
-          clearTimeout(modalCloseTimeout);
-          modalCloseTimeout = null;
-        }
-      }
-
       // Expose functions globally for testing
       window.showPage = showPage;
-      window.openContactModal = openContactModal;
-      window.closeContactModal = closeContactModal;
-
-      // Handle form submission
-      document
-        .getElementById("contact-form")
-        .addEventListener("submit", async function (e) {
-          e.preventDefault();
-
-          const submitBtn = document.querySelector(".submit-btn");
-          const messageDiv = document.getElementById("form-message");
-          const form = e.target;
-
-          // Show loading state
-          submitBtn.disabled = true;
-          submitBtn.textContent = "Sending...";
-          messageDiv.style.display = "none";
-
-          try {
-            const response = await fetch(form.action, {
-              method: form.method,
-              body: new FormData(form),
-              headers: {
-                Accept: "application/json",
-              },
-            });
-            if (response.ok) {
-              messageDiv.className = "form-message success";
-              messageDiv.textContent =
-                "Message sent successfully! I'll get back to you soon.";
-              messageDiv.style.display = "block";
-              form.reset();
-
-              // Close modal after 2 seconds
-              modalCloseTimeout = setTimeout(() => {
-                closeContactModal();
-                messageDiv.style.display = "none";
-                modalCloseTimeout = null;
-              }, 2000);
-            } else {
-              return Promise.reject("Network response was not ok");
-            }
-          } catch (error) {
-            messageDiv.className = "form-message error";
-            messageDiv.textContent =
-              "Oops! There was a problem sending your message. Please try again.";
-            messageDiv.style.display = "block";
-          } finally {
-            submitBtn.disabled = false;
-            submitBtn.textContent = "Send Message";
-          }
-        });
     </script>
   </body>
 </html>
