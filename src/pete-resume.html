@@ -4,124 +4,52 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="format-detection" content="telephone=no" />
+    <meta
+      name="description"
+      content="Resume for Peter Hollmer - Senior Engineering Leader. Director of Engineering at SnapStream with 15+ years of experience leading teams, optimizing infrastructure, and delivering measurable business impact."
+    />
     <title>Peter Hollmer - Senior Engineering Leader</title>
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="profile" />
+    <meta property="og:url" content="https://peterhollmer.com/pete-resume.html" />
+    <meta
+      property="og:title"
+      content="Peter Hollmer - Senior Engineering Leader Resume"
+    />
+    <meta
+      property="og:description"
+      content="Director of Engineering at SnapStream with 15+ years of experience leading teams, optimizing infrastructure, and delivering measurable business impact."
+    />
+    <meta
+      property="og:image"
+      content="https://peterhollmer.com/images/HeadShotWeb.jpg"
+    />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary" />
+    <meta property="twitter:url" content="https://peterhollmer.com/pete-resume.html" />
+    <meta
+      property="twitter:title"
+      content="Peter Hollmer - Senior Engineering Leader Resume"
+    />
+    <meta
+      property="twitter:description"
+      content="Director of Engineering at SnapStream with 15+ years of experience leading teams, optimizing infrastructure, and delivering measurable business impact."
+    />
+    <meta
+      property="twitter:image"
+      content="https://peterhollmer.com/images/HeadShotWeb.jpg"
+    />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
     />
+    <link rel="stylesheet" href="./styles.css" />
     <style>
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-      }
-
-      :root {
-        --gradient-start: rgb(102 126 234);
-        --gradient-end: rgb(118 75 162);
-        --color-white: #fff;
-        --color-white-light: #f0f0f0;
-        --color-white-10: rgb(255 255 255 / 10%);
-        --color-white-20: rgb(255 255 255 / 20%);
-        --color-white-30: rgb(255 255 255 / 30%);
-        --color-white-50: rgb(255 255 255 / 50%);
-        --color-white-60: rgb(255 255 255 / 60%);
-        --color-white-80: rgb(255 255 255 / 80%);
-        --color-black-10: rgb(0 0 0 / 10%);
-        --color-black-30: rgb(0 0 0 / 30%);
-        --color-black-70: rgb(0 0 0 / 70%);
-        --color-success: rgb(74 222 128);
-        --text-dark: #2d3748;
-        --accent-color: rgb(102 126 234);
-        --hover-transform: translateY(-3px);
-      }
-
-      body {
-        font-family:
-          "SF Pro Display",
-          -apple-system,
-          BlinkMacSystemFont,
-          "Segoe UI",
-          Roboto,
-          "Helvetica Neue",
-          Arial,
-          sans-serif;
-        line-height: 1.6;
-        color: white;
-        background: linear-gradient(
-          180deg,
-          rgb(102 126 234) 0%,
-          rgb(118 75 162) 100%
-        );
-        min-height: 100vh;
-        position: relative;
-        overflow-x: hidden;
-      }
-
-      /* Floating shapes animation */
+      /* Floating shapes z-index override for resume page */
       .floating-shapes {
-        position: fixed;
-        width: 100%;
-        height: 100%;
-        top: 0;
-        left: 0;
-        pointer-events: none;
         z-index: 1;
-      }
-
-      .shape {
-        position: absolute;
-        background: rgb(255 255 255 / 10%);
-        border-radius: 50%;
-        animation: float-shape 20s infinite linear;
-      }
-
-      .shape:nth-child(1) {
-        width: 80px;
-        height: 80px;
-        left: 10%;
-        animation-delay: 0s;
-      }
-
-      .shape:nth-child(2) {
-        width: 120px;
-        height: 120px;
-        left: 70%;
-        animation-delay: 5s;
-      }
-
-      .shape:nth-child(3) {
-        width: 60px;
-        height: 60px;
-        left: 40%;
-        animation-delay: 10s;
-      }
-
-      .shape:nth-child(4) {
-        width: 90px;
-        height: 90px;
-        left: 80%;
-        animation-delay: 15s;
-      }
-
-      @keyframes float-shape {
-        0% {
-          transform: translateY(100vh) rotate(0deg);
-          opacity: 0;
-        }
-
-        10% {
-          opacity: 1;
-        }
-
-        90% {
-          opacity: 1;
-        }
-
-        100% {
-          transform: translateY(-100px) rotate(360deg);
-          opacity: 0;
-        }
       }
 
       /* Dynamic Header */
@@ -143,18 +71,6 @@
         border: 1px solid rgb(255 255 255 / 20%);
         box-shadow: 0 8px 32px rgb(0 0 0 / 30%);
         animation: slide-down 1s ease-out;
-      }
-
-      @keyframes slide-down {
-        from {
-          opacity: 0;
-          transform: translateY(-30px);
-        }
-
-        to {
-          opacity: 1;
-          transform: translateY(0);
-        }
       }
 
       h1 {
@@ -236,18 +152,6 @@
         border: 1px solid var(--color-white-20);
         box-shadow: 0 8px 32px var(--color-black-30);
         animation: slide-up 1s ease-out;
-      }
-
-      @keyframes slide-up {
-        from {
-          opacity: 0;
-          transform: translateY(30px);
-        }
-
-        to {
-          opacity: 1;
-          transform: translateY(0);
-        }
       }
 
       .summary-section h2 {
@@ -406,7 +310,7 @@
         box-shadow: 0 15px 35px var(--color-black-30);
       }
 
-      .skill-category h4 {
+      .skill-category h3 {
         color: var(--color-white);
         margin-bottom: 1rem;
         display: flex;
@@ -597,7 +501,7 @@
         .company-info h3,
         .role,
         .achievements li,
-        .skill-category h4,
+        .skill-category h3,
         .cert-name,
         .project-title,
         .experience-card p,
@@ -899,7 +803,7 @@
         </div>
         <div class="skills-grid">
           <div class="skill-category">
-            <h4><i class="fas fa-users"></i> Leadership & Strategy</h4>
+            <h3><i class="fas fa-users"></i> Leadership & Strategy</h3>
             <div class="skill-tags">
               <span class="skill-tag">Engineering Leadership</span>
               <span class="skill-tag">Team Building & Development</span>
@@ -910,7 +814,7 @@
             </div>
           </div>
           <div class="skill-category">
-            <h4><i class="fas fa-cloud"></i> Cloud & Infrastructure</h4>
+            <h3><i class="fas fa-cloud"></i> Cloud & Infrastructure</h3>
             <div class="skill-tags">
               <span class="skill-tag">AWS</span>
               <span class="skill-tag">Infrastructure as Code (Terraform)</span>
@@ -920,7 +824,7 @@
             </div>
           </div>
           <div class="skill-category">
-            <h4><i class="fas fa-cogs"></i> DevOps & Automation</h4>
+            <h3><i class="fas fa-cogs"></i> DevOps & Automation</h3>
             <div class="skill-tags">
               <span class="skill-tag">GitHub Actions</span>
               <span class="skill-tag">AWS Systems Manager</span>
@@ -929,9 +833,9 @@
             </div>
           </div>
           <div class="skill-category">
-            <h4>
+            <h3>
               <i class="fas fa-laptop-code"></i> Development & Architecture
-            </h4>
+            </h3>
             <div class="skill-tags">
               <span class="skill-tag">Python</span>
               <span class="skill-tag">API Integration & Migration</span>
@@ -942,7 +846,7 @@
             </div>
           </div>
           <div class="skill-category">
-            <h4><i class="fas fa-chart-line"></i> Observability & Quality</h4>
+            <h3><i class="fas fa-chart-line"></i> Observability & Quality</h3>
             <div class="skill-tags">
               <span class="skill-tag">Prometheus</span>
               <span class="skill-tag">Grafana</span>

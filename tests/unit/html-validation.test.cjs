@@ -2,7 +2,7 @@ const { readFileSync } = require('fs');
 const { join } = require('path');
 
 describe('HTML Validation', () => {
-  const htmlFiles = ['../src/index.html', '../src/404.html', '../src/50x.html'];
+  const htmlFiles = ['../src/index.html', '../src/pete-resume.html', '../src/404.html', '../src/50x.html'];
   
   htmlFiles.forEach(filename => {
     describe(`${filename}`, () => {
@@ -75,10 +75,11 @@ describe('HTML Validation', () => {
       
       test('has no broken internal links', () => {
         const internalLinks = htmlContent.match(/href="[^"]*\.html"/gi) || [];
+        const filenames = htmlFiles.map(f => f.split('/').pop());
         internalLinks.forEach(link => {
           const href = link.match(/href="([^"]*)"/i)[1];
           const filename = href.replace(/^\.?\//, '');
-          expect(htmlFiles).toContain(filename);
+          expect(filenames).toContain(filename);
         });
       });
       
